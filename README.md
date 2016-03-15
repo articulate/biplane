@@ -2,33 +2,15 @@
 
 Control your Kong instance through simple configuration.
 
+[![Build Status](https://travis-ci.org/articulate/biplane.svg?branch=master)](https://travis-ci.org/articulate/biplane)
+
 [biplane](http://drops.articulate.com/w1ad/NQlLBhGp+)
 
 ## Installation
 
-
-Add this to your application's `shard.yml`:
-
-```yaml
-dependencies:
-  biplane:
-    github: plukevdh/biplane
-```
-
+Download a binary from the [releases page](https://github.com/articulate/biplane/releases) and place somewhere in your `PATH`.
 
 ## Usage
-
-
-```crystal
-require "biplane"
-```
-
-
-TODO: Write usage instructions here
-
-## Development
-
-TODO: Write development instructions here
 
 ## Contributing
 

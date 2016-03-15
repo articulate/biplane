@@ -1,7 +1,7 @@
 language: crystal
 crystal:
-  - latest
-  - nightly
+- latest
+- nightly
 deploy:
   provider: releases
   api_key:
@@ -9,3 +9,6 @@ deploy:
   file: biplane
   on:
     tags: true
+notifications:
+  slack:
+    secure: VI1gD1I8chUxWLQUAPm+Iea5U7wm/6Gzf6KOAtN9/NcnhaXSkIKFvPe7bm3GPXVSnJmpGcK6bIEblybm35p2QpfXnyQYYNf0GKGRrwDL7k9g0XKcjNshO2TM7D0ZVNYQTs0leGypQU4PdS0xhg3SkIigz6UcLeadBIp8OXQ3U/Afh72i2r0x3UgYJ4xkiBwEdKiZ38o4OuJtVcWmBPMv/clEIj5JUkoSCV4JL5K1Ij16Iu8KLWAhHOvjyRmC8NHvX754hf6ZygJlCNdyAqxwmr8NHh2bn2ujwbcBl8z+eS6XorEesgtSgxTgkiUqKnHvxAP2/gzRMLmEEoKpVu/68OvOstnwtqClelj9tBtzRp1uaylhacM1sw3rmbrEjl7dQRPzt50yzb6T+H/YPcnYcOAHPEGT6wuVgKeyVCWmHaHxgu75Tf6nWc0RI7dyKphkVGjGueoB/opsfxeN9itRwQCHujQ0nu1wsNQa8n/Ersd5Q6cGXctvQ+w+XYY1b+/reIwnIy0/ty5bkYAkZC3bS5p7Suxo6QFicuysqaHlylXoa1xV97w7rYCF2xpJYQSPfB5SvQqkOIvmLNkNqIQ8WQ3YeIviKOx0hdJ9f6ysye9+G1EnvlpRjpafEtFWu/UBJqM+3kx2yUYiq0pQ/M+u2VleU3iCa+KV2de9oBjGoIQ=
