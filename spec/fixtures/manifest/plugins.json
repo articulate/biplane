@@ -1,0 +1,31 @@
+{
+  "data": [
+    {
+      "api_id": "fe67b76c-e586-48c8-b7cd-1386f9401cb5",
+      "config": {
+        "whitelist": [
+          "google-auth"
+        ]
+      },
+      "created_at": 1456414790000,
+      "enabled": true,
+      "id": "f65bbbc0-6e65-479c-acc6-444d5b2a4703",
+      "name": "acl"
+    },
+    {
+      "api_id": "fe67b76c-e586-48c8-b7cd-1386f9401cb5",
+      "config": {
+        "key_claim_name": "aud",
+        "secret_is_base64": true,
+        "uri_param_names": [
+          "jwt"
+        ]
+      },
+      "created_at": 1456414790000,
+      "enabled": true,
+      "id": "449b2037-8ec3-4efd-bfec-eaa1c7cc00eb",
+      "name": "jwt"
+    }
+  ],
+  "total": 2
+}

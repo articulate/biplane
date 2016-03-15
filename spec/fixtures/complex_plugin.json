@@ -1,0 +1,32 @@
+{
+  "api_id": "cacca929-bda8-4f5d-9c3a-130a87ede1b7",
+  "config": {
+    "add": {
+      "body": {},
+      "headers": [
+        "x-kong-prefix:localhost",
+        "x-kong-host:docker|8000"
+      ],
+      "querystring": {}
+    },
+    "append": {
+      "body": {},
+      "headers": {},
+      "querystring": {}
+    },
+    "remove": {
+      "body": {},
+      "headers": {},
+      "querystring": {}
+    },
+    "replace": {
+      "body": {},
+      "headers": {},
+      "querystring": {}
+    }
+  },
+  "created_at": 1456856990000,
+  "enabled": true,
+  "id": "2c9eb338-171d-4453-8f22-6778264e1d9b",
+  "name": "request-transformer"
+}

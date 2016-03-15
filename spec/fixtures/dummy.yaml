@@ -1,0 +1,38 @@
+---
+apis:
+  - name: products_admin_api
+    attributes:
+      request_path: /admin/products
+      strip_request_path: true
+      upstream_url: http://www.example.com/admin/products
+    plugins:
+      - name: acl
+        attributes:
+          config:
+            whitelist:
+              - google-auth
+      - name: jwt
+        attributes:
+          config:
+            key_claim_name: aud
+            secret_is_base64: true
+            uri_param_names:
+              - jwt
+
+consumers:
+  - username: google-auth
+    credentials:
+      - name: jwt
+        attributes:
+          key: xxx
+          secret: yyy
+    acls:
+      - group: google-auth
+  - username: docs-user
+    credentials:
+      - name: basic-auth
+        attributes:
+          username: abc
+          password: efg
+    acls:
+      - group: docs

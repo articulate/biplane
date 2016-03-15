@@ -1,0 +1,2 @@
+group: 'google-auth'
+ensure: 'present'

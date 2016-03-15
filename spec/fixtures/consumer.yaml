@@ -1,0 +1,9 @@
+username: 'google-auth'
+acls:
+- group: 'google-auth'
+  ensure: 'present'
+credentials:
+- name: 'acl'
+  attributes:
+    key: 'xxx'
+    secret: 'yyy'

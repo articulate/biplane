@@ -1,0 +1,16 @@
+name: biplane
+version: 0.1.0
+
+authors:
+  - Luke van der Hoeven <hungerandthirst@gmail.com>
+
+license: MIT
+
+dependencies:
+  commander:
+    github: meskyanichi/commander
+    version: ~> 0.3.0
+
+development_dependencies:
+  mock:
+    github: porras/mock

@@ -1,0 +1,4 @@
+attributes:
+  config:
+    whitelist: [docs-auth, google-auth]
+name: acl
