@@ -1,4 +1,7 @@
 language: crystal
+crystal:
+  - latest
+  - nightly
 deploy:
   provider: releases
   api_key:
