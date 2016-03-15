@@ -4,7 +4,7 @@ Control your Kong instance through simple configuration.
 
 [![Build Status](https://travis-ci.org/articulate/biplane.svg?branch=master)](https://travis-ci.org/articulate/biplane)
 
-[biplane](http://drops.articulate.com/w1ad/NQlLBhGp+)
+![biplane](http://drops.articulate.com/w1ad/NQlLBhGp+)
 
 ## Installation
 
