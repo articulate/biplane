@@ -2,6 +2,8 @@ language: crystal
 crystal:
 - latest
 - nightly
+after_success: 
+  - make build 
 deploy:
   provider: releases
   api_key:
