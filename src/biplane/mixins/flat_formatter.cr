@@ -1,28 +1,38 @@
 module Biplane::Mixins
   module FlatFormatter
-    private def form_key(key, item : String | Bool | Int64 | Float64)
-      "#{key}=#{item}"
+    alias ValueTypes = String | Bool | Int64 | Float64
+
+    private def form_key(memo, key, item : ValueTypes)
+      return memo if item.is_a?(String) && item.strip == ""
+
+      memo[key] = item
+      memo
     end
 
-    private def form_key(key, items : Array)
-      "#{key}=#{items.join(",")}"
+    private def form_key(memo, key, items : Array)
+      return memo if items.empty?
+
+      memo[key] = items.join(",")
+      memo
     end
 
-    private def form_key(key, items : Hash)
-      return if items.empty?
+    private def form_key(memo, key, items : Hash)
+      return memo if items.empty?
 
-      items.map do |k, v|
-        result = form_key(k, v)
-        "#{key}.#{result}" unless result.nil?
-      end.compact
+      items.each do |k, v|
+        next if v.nil?
+        form_key(memo, "#{key}.#{k}", v).not_nil!
+      end
+
+      memo
     end
 
-    private def form_key(key, item : Nil)
+    private def flatten(base_key, item)
+      form_key({} of String => ValueTypes, base_key, item)
+    end
+
+    private def form_key(memo, key, item : Nil)
       raise "Invalid config parameter: #{key}"
-    end
-
-    private def form_key(key, item : JSON::Any)
-      form_key(key, item.raw)
     end
   end
 end
