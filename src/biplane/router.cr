@@ -1,6 +1,7 @@
+require "./route"
+
 module Biplane
   module Router
-    KEY    = /(:\w+)/
     ROUTES = {
       apis:        "/apis",
       api:         "/apis/:name",
@@ -14,23 +15,12 @@ module Biplane
       acl:         "/consumers/:username/acls/:id",
     }
 
-    class MissingParam < Exception; end
-
     def self.build(resource : Symbol, args = {} of Symbol => String)
-      interpolate(ROUTES[resource], args)
+      Route.new(ROUTES[resource], args)
     end
 
-    private def self.interpolate(base, args)
-      required = base.scan(KEY).map(&.[1].sub(':', ""))
-      diff = (required - args.keys.map(&.to_s))
-
-      raise MissingParam.new("Missing arguments #{diff.join(", ")}.") unless diff.empty?
-
-      args.each do |k, v|
-        base = base.gsub(":#{k}", v)
-      end
-
-      base
+    def self.build!(resource : Symbol, args = {} of Symbol => String)
+      Route.new(ROUTES[resource], args).validate!
     end
   end
 end
