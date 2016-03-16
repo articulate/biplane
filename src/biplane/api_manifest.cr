@@ -10,7 +10,7 @@ module Biplane
 
     def apis
       return @apis unless @apis.empty?
-      apis = add_client @client.apis
+      apis = @client.apis.map { |api| api.client = @client; api }
 
       @apis = ChildCollection.new("name", apis)
     end
@@ -18,9 +18,13 @@ module Biplane
     def consumers
       return @consumers unless @consumers.empty?
 
-      consumers = add_client @client.consumers
-      # associate credentials which require knowledge of the plugins
-      consumers.each &.cache_credentials(plugins)
+      consumers = @client.consumers.map do |consumer|
+        consumer.client = @client
+
+        # associate credentials which require knowledge of the plugins
+        consumer.cache_credentials(plugins)
+        consumer
+      end
 
       @consumers = ChildCollection.new("username", consumers)
     end
@@ -46,10 +50,6 @@ module Biplane
         "apis":      apis.diff(config.apis),
         "consumers": consumers.diff(config.consumers),
       }.reject { |k, v| v.nil? }
-    end
-
-    private def add_client(items)
-      items.map { |item| item.client = @client; item }
     end
   end
 end
