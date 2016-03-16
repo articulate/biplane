@@ -25,6 +25,15 @@ module Biplane
       attributes["upstream_url"].to_s
     end
 
+    def as_params
+      {
+        "name":               name,
+        "request_path":       request_path,
+        "strip_request_path": strip_request_path,
+        "upstream_url":       upstream_url,
+      }.to_json
+    end
+
     def serialize
       {
         "name":       name,
