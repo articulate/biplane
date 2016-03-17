@@ -4,6 +4,9 @@ VERSION:= $(shell crystal eval 'require "./src/biplane/version"; puts Biplane::V
 build:
 	crystal build src/biplane.cr
 
+build-release:
+	crystal build --release src/biplane.cr
+
 test:
 	crystal spec
 

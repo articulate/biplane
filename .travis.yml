@@ -3,7 +3,7 @@ crystal:
 - latest
 - nightly
 after_success: 
-  - make build 
+  - make build-release
 deploy:
   provider: releases
   api_key:
