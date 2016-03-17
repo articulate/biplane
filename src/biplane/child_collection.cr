@@ -3,6 +3,7 @@ module Biplane
     include Enumerable(T)
 
     getter collection
+    getter! parent
 
     delegate empty?, last, @collection
 
@@ -10,7 +11,7 @@ module Biplane
       { "#{k}" => {{values}} }
     end
 
-    def initialize(@collection : Array(T))
+    def initialize(@collection : Array(T), @parent = nil)
       @collection.map! {|item| item.parent = @parent; item } unless @parent.nil?
     end
 

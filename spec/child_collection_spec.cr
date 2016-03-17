@@ -9,7 +9,8 @@ module Biplane
       other,
     ]
 
-    collect = ChildCollection.new(array)
+    parent = json_fixture(Api)
+    collect = ChildCollection.new(array, parent)
 
     first_diff = yaml_fixture(PluginConfig)
     second_diff = yaml_fixture(PluginConfig)
@@ -21,6 +22,14 @@ module Biplane
       first_diff,
       second_diff,
     ]
+
+    it "knows parent" do
+      collect.parent.should eq parent
+    end
+
+    it "sets parent for each nested object" do
+      collect.all? { |i| i.parent == parent }.should be_true
+    end
 
     it "can return the id key" do
       collect.id_key.should eq :name
@@ -55,7 +64,7 @@ module Biplane
       end
 
       it "can diff with another ChildCollection" do
-        other_collect = ChildCollection.new(for_diff)
+        other_collect = ChildCollection.new(for_diff, parent)
 
         collect.diff(other_collect).should eq({
           "other": {"attributes" => {

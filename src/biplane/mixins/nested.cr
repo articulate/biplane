@@ -1,5 +1,7 @@
 module Biplane::Mixins
   module Nested
+    property! parent
+
     macro child_key(key)
       # Lookup method for the key used to find self in a collection
       def self.child_key
