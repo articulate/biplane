@@ -7,6 +7,17 @@ module Biplane
 
     property! client
 
+    macro def member_key : Symbol
+      :{{ @type.name.split("::").last.downcase }}
+    end
+
+    def member_route
+      params = {child_key => lookup_key}
+      params[parent.not_nil!.child_key] = parent.not_nil!.lookup_key unless parent.nil?
+
+      Router.build(member_key, params)
+    end
+
     macro diff_attrs(*attrs)
       def diff(other : {{T}}Config)
         {

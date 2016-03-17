@@ -4,6 +4,9 @@ require "json"
 require "./model"
 require "./models/*"
 
+require "./config"
+require "./configs/*"
+
 module Biplane
   class KongClient
     class APIError < Exception; end
@@ -82,6 +85,44 @@ module Biplane
         @client.close
       end
     {% end %}
+
+    def create(diff : Diff)
+      create(diff.local)
+    end
+
+    def create(config : Config)
+      headers = HTTP::Headers.new
+      headers.add("Content-Type", "application/json")
+
+      response = @client.post(config.collection_route.to_s, headers, config.as_params) as HTTP::Client::Response
+
+      case response.status_code
+      when 201
+        puts "Created #{config.member_key.to_s} '#{config.lookup_key}'!".colorize(:green)
+        build(config.works_with, JSON.parse(response.body).as_h)
+      else
+        raise APIError.new("Invalid API response (status code #{response.status_code}): #{response.body}")
+      end
+    ensure
+      @client.close
+    end
+
+    def destroy(diff : Diff)
+      destroy(diff.remote)
+    end
+
+    def destroy(object : Model)
+      response = @client.delete(object.member_route.to_s) as HTTP::Client::Response
+
+      case response.status_code
+      when 204
+        puts "#{object.member_key.to_s.capitalize} '#{object.lookup_key}' destroyed!".colorize(:green)
+      else
+        raise APIError.new("Invalid API response (status code #{response.status_code}): #{response.body}")
+      end
+    ensure
+      @client.close
+    end
 
     # 404 when dealing with an Array-type class should return empty
     private def not_found(kind : Array.class)
