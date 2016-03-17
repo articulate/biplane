@@ -39,6 +39,10 @@ module Biplane
     consumer.client = KongClient.new(fake_client)
     consumer.cache_credentials([json_fixture(Plugin)])
 
+    it "knows member route" do
+      consumer.member_route.to_s.should eq "/consumers/#{consumer.username}"
+    end
+
     it "can compare with config objects" do
       consumer.should eq(cfg)
     end

@@ -5,7 +5,12 @@ module Biplane
     cfg = yaml_fixture(CredentialConfig)
 
     cred = json_fixture(Credential)
-    cred.plugin = json_fixture(Plugin)
+    plugin = cred.plugin = json_fixture(Plugin)
+
+    it "knows member route" do
+      cred.parent = parent = json_fixture(Consumer)
+      cred.member_route.to_s.should eq "/consumers/#{parent.username}/#{plugin.name}/#{cred.id}"
+    end
 
     it "can compare with config objects" do
       cred.should eq(cfg)

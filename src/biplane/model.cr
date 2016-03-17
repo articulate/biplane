@@ -12,7 +12,7 @@ module Biplane
     end
 
     def member_route
-      params = {child_key => lookup_key}
+      params = {child_key => lookup_key, id: id}
       params[parent.not_nil!.child_key] = parent.not_nil!.lookup_key unless parent.nil?
 
       Router.build(member_key, params)

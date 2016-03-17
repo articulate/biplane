@@ -5,6 +5,11 @@ module Biplane
     acl = json_fixture(Acl)
     cfg = yaml_fixture(AclConfig)
 
+    it "knows member route" do
+      parent = acl.parent = json_fixture(Consumer)
+      acl.member_route.to_s.should eq "/consumers/#{parent.username}/acls/#{acl.id}"
+    end
+
     it "can check equality" do
       acl.should eq(cfg)
     end

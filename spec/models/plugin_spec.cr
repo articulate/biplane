@@ -2,6 +2,13 @@ require "../spec_helper"
 
 module Biplane
   describe Plugin do
+    it "knows member route" do
+      plugin = json_fixture(Plugin)
+      parent = plugin.parent = json_fixture(Api)
+
+      plugin.member_route.to_s.should eq "/apis/#{parent.name}/plugins/#{plugin.id}"
+    end
+
     it "can serialize" do
       plugin = json_fixture(Plugin)
       plugin.serialize.should eq({

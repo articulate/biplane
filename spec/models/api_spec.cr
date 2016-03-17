@@ -43,6 +43,10 @@ module Biplane
     fake_client.stub(:get).with("/apis/library_public_api/plugins").and_return(response)
     api.client = KongClient.new(fake_client)
 
+    it "knows member route" do
+      api.member_route.to_s.should eq "/apis/#{api.name}"
+    end
+
     it "can compare with config objects" do
       api.should eq(cfg)
     end
