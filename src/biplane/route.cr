@@ -15,6 +15,10 @@ module Biplane
       to_s(args, force: true)
     end
 
+    def partial(args : Hash)
+      self.class.new(@path, args)
+    end
+
     def validate!
       interpolate(force: true)
       self
@@ -30,7 +34,5 @@ module Biplane
         memo.gsub(":#{k}", v)
       end
     end
-
   end
 end
-

@@ -4,9 +4,17 @@ module Biplane
   describe Route do
     route = Route.new("/one/:one/:two")
 
-    it "can partially apply args" do
+    it "can apply args" do
       route.to_s.should eq "/one/:one/:two"
       route.to_s({two: 2}).should eq "/one/:one/2"
+    end
+
+    it "can return partially applied route" do
+      partial = route.partial({one: 1})
+
+      partial.should be_a Route
+      partial.should_not eq route
+      partial.to_s.should eq "/one/1/:two"
     end
 
     it "ignores unknown path parts" do
