@@ -9,7 +9,7 @@ module Biplane
       other,
     ]
 
-    collect = ChildCollection.new("name", array)
+    collect = ChildCollection.new(array)
 
     first_diff = yaml_fixture(PluginConfig)
     second_diff = yaml_fixture(PluginConfig)
@@ -23,7 +23,7 @@ module Biplane
     ]
 
     it "can return the id key" do
-      collect.id_key.should eq "name"
+      collect.id_key.should eq :name
     end
 
     it "can return the keys defined by the key property" do
@@ -34,10 +34,6 @@ module Biplane
       collect.lookup("other").should eq(other)
     end
 
-    it "can check equality with an array" do
-      collect.should eq(array)
-    end
-
     it "can serialize the collection" do
       collect.serialize.should eq([
         {"name" => "acl", "attributes" => {"config" => {"whitelist" => ["docs-auth", "google-auth"]}}},
@@ -45,22 +41,28 @@ module Biplane
       ])
     end
 
-    it "can diff with an array" do
-      collect.diff(for_diff).should eq({
-        "other": {"attributes" => {
-          "config" => Diff.new(nil, {"whitelist" => ["docs-auth", "google-auth"]}),
-        }},
-      })
-    end
+    describe "compares" do
+      it "can check equality with an array" do
+        collect.should eq(array)
+      end
 
-    it "can diff with another ChildCollection" do
-      other_collect = ChildCollection.new("name", for_diff)
+      it "can diff with an array" do
+        collect.diff(for_diff).should eq({
+          "other": {"attributes" => {
+            "config" => Diff.new(nil, {"whitelist" => ["docs-auth", "google-auth"]}),
+          }},
+        })
+      end
 
-      collect.diff(other_collect).should eq({
-        "other": {"attributes" => {
-          "config" => Diff.new(nil, {"whitelist" => ["docs-auth", "google-auth"]}),
-        }},
-      })
+      it "can diff with another ChildCollection" do
+        other_collect = ChildCollection.new(for_diff)
+
+        collect.diff(other_collect).should eq({
+          "other": {"attributes" => {
+            "config" => Diff.new(nil, {"whitelist" => ["docs-auth", "google-auth"]}),
+          }},
+        })
+      end
     end
   end
 end

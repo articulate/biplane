@@ -2,7 +2,6 @@ module Biplane
   class ChildCollection(T)
     include Enumerable(T)
 
-    getter id_key
     getter collection
 
     delegate empty?, last, @collection
@@ -11,7 +10,12 @@ module Biplane
       { "#{k}" => {{values}} }
     end
 
-    def initialize(@id_key, @collection : Array(T))
+    def initialize(@collection : Array(T))
+      @collection.map! {|item| item.parent = @parent; item } unless @parent.nil?
+    end
+
+    def id_key
+      T.child_key
     end
 
     def each
@@ -37,7 +41,7 @@ module Biplane
     end
 
     def diff(other : Array)
-      diff(ChildCollection.new(id_key, other))
+      diff(ChildCollection.new(other))
     end
 
     def diff(other : ChildCollection)

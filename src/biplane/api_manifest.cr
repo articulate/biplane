@@ -4,15 +4,15 @@ module Biplane
   # *all* of the resources requested at once)
   class ApiManifest
     def initialize(@client : KongClient)
-      @apis = ChildCollection.new("name", [] of Api)
-      @consumers = ChildCollection.new("username", [] of Consumer)
+      @apis = ChildCollection.new([] of Api)
+      @consumers = ChildCollection.new([] of Consumer)
     end
 
     def apis
       return @apis unless @apis.empty?
       apis = @client.apis.map { |api| api.client = @client; api }
 
-      @apis = ChildCollection.new("name", apis)
+      @apis = ChildCollection.new(apis)
     end
 
     def consumers
@@ -26,7 +26,7 @@ module Biplane
         consumer
       end
 
-      @consumers = ChildCollection.new("username", consumers)
+      @consumers = ChildCollection.new(consumers)
     end
 
     def plugins

@@ -6,7 +6,7 @@ module Biplane
     include Mixins::Nested
 
     diff_attrs username, credentials, acls
-    child_collection(acls, group, {username: username})
+    child_collection(acls, {username: username})
     child_key username
 
     property! credentials
@@ -22,7 +22,7 @@ module Biplane
         client.credentials({username: username, name: plugin.name}).each(&.plugin = plugin)
       end.flatten.uniq(&.name)
 
-      @credentials = ChildCollection.new("name", creds)
+      @credentials = ChildCollection.new(creds)
     end
 
     def serialize
