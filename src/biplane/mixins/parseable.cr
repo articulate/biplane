@@ -25,8 +25,6 @@ module Biplane::Mixins
     end
 
     private def to_hash(items : Hash(K, V))
-      return Hash(String, Type).new if items.empty?
-
       items.reduce(Hash(String, Type).new) do |memo, k, v|
         value = to_hash(v)
 
