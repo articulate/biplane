@@ -115,7 +115,29 @@ module Biplane
 
       case response.status_code
       when 204
-        puts "#{object.member_key.to_s.capitalize} '#{object.lookup_key}' destroyed!".colorize(:green)
+        puts "#{object.member_key.to_s.capitalize} '#{object.lookup_key}' destroyed!".colorize(:red)
+      else
+        raise APIError.new("Invalid API response (status code #{response.status_code}): #{response.body}")
+      end
+    ensure
+      @client.close
+    end
+
+    def update(diff : Diff)
+      update(diff.local as Config, diff.remote as Model) if diff.changed?
+    end
+
+    def update(config : Config, object : Model)
+      headers = HTTP::Headers.new
+      headers.add("Content-Type", "application/json")
+
+      params = config.as_params.merge({id: object.id})
+      response = @client.put(config.collection_route.to_s, headers, params.to_json) as HTTP::Client::Response
+
+      case response.status_code
+      when 200
+        puts "Updated #{config.member_key.to_s} '#{config.lookup_key}'!".colorize(:yellow)
+        Diff.new(config, object).print
       else
         raise APIError.new("Invalid API response (status code #{response.status_code}): #{response.body}")
       end

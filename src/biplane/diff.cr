@@ -8,8 +8,15 @@ module Biplane
     }
 
     getter local, remote
+    getter! roots
 
-    def initialize(@local, @remote)
+    def initialize(@local, @remote, @roots = nil)
+      # raise "Root objects required for non-model diffs" unless  || !@roots.nil?
+      @roots ||= [@local, @remote]
+    end
+
+    def root?
+      @local.is_a?(Config) || @remote.is_a?(Model)
     end
 
     def changed?

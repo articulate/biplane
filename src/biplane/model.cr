@@ -22,7 +22,7 @@ module Biplane
       def diff(other : {{T}}Config)
         {
         {% for attr in attrs %}
-          "{{attr}}": compare({{attr}}, other.{{attr}}),
+          "{{attr}}": compare({{attr}}, other.{{attr}}, other),
         {% end %}
         }.reject {|k, v| v.nil? }
       end
@@ -36,23 +36,23 @@ module Biplane
       Diff.new(nil, self)
     end
 
-    def compare(server : ChildCollection, local : ChildCollection | Array)
+    def compare(server : ChildCollection, local : ChildCollection | Array, other : Config)
       server.diff(local) unless server == local
     end
 
     # diffing nested info
-    def compare(server : Hash, local : Hash)
+    def compare(server : Hash, local : Hash, other : Config)
       res = server.reduce(Hash(String, Diff).new) do |memo, k, v|
         lhs = local.fetch(k, nil)
-        memo[k] = Diff.new(lhs, v) unless v == lhs
+        memo[k] = Diff.new(lhs, v, [other, self]) unless v == lhs
         memo
       end
 
       res.empty? ? nil : res
     end
 
-    def compare(server, local)
-      Diff.new(local, server) unless server == local
+    def compare(server, local, other : Config)
+      Diff.new(local, server, [other, self]) unless server == local
     end
   end
 end

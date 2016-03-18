@@ -35,8 +35,21 @@ module Biplane
           cmd.use = "apply [filename]"
           cmd.short = "Apply config to Kong instance"
           cmd.long = cmd.short
+
+          cmd.flags.add @@host_flag, @@port_flag, @@https_flag
           cmd.run do |options, arguments|
-            # Do application
+            filename = arguments[0] as String
+            host = options.string["host"]
+            port = options.int["port"]
+            client = KongClient.new(host, port, !options.bool["disable_https"])
+
+            manifest = ApiManifest.new(client)
+            config = ConfigManifest.new(filename)
+
+            diff = manifest.diff(config)
+
+            DiffApplier.new(client).apply(diff)
+
             nil
           end
         end
