@@ -57,7 +57,7 @@ module Biplane
           end
 
           cmd.run do |options, arguments|
-            filename = arguments[0] as String
+            filename = "STDOUT"
             host = options.string["host"]
             port = options.int["port"]
             format = options.string["format"]
@@ -67,6 +67,12 @@ module Biplane
             client = KongClient.new(host, port, !options.bool["disable_https"])
             serialized = ApiManifest.new(client).serialize
 
+            if arguments.empty?
+              puts serialized.to_pretty_json
+              exit(0)
+            end
+
+            filename = arguments[0] as String
             File.open(filename, "w") do |f|
               case format
               when "json"
