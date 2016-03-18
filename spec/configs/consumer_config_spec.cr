@@ -13,5 +13,12 @@ module Biplane
       consumer.member_route.should be_a(Route)
       consumer.member_route.to_s.should eq "/consumers/#{consumer.username}"
     end
+
+    it "knows nested collections" do
+      items = consumer.nested
+
+      items.should be_a(Array(AclConfig | CredentialConfig))
+      items.size.should eq 2
+    end
   end
 end

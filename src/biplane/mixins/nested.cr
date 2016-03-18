@@ -17,5 +17,20 @@ module Biplane::Mixins
         {{key}}
       end
     end
+
+    # ensure any class mixing this in responds to nested
+    def nested
+      [] of self
+    end
+
+    macro as_nested(*collections)
+      def nested
+        [
+        {% for collection in collections %}
+          {{collection}}.collection,
+        {% end %}
+        ].flatten
+      end
+    end
   end
 end

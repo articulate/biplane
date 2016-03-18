@@ -6,6 +6,7 @@ module Biplane
     include Mixins::Nested
 
     child_key name
+    as_nested plugins
 
     YAML.mapping({
       name:       String,

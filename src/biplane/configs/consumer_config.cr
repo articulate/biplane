@@ -5,11 +5,12 @@ module Biplane
     include Mixins::Nested
 
     child_key username
+    as_nested acls, credentials
 
     YAML.mapping({
       username:    String,
-      acls:        Array(AclConfig),
-      credentials: Array(CredentialConfig),
+      acls:        {type: Array(AclConfig), default: Array(AclConfig).new},
+      credentials: {type: Array(CredentialConfig), default: Array(CredentialConfig).new},
     })
 
     def as_params
