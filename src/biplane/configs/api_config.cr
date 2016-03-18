@@ -35,7 +35,7 @@ module Biplane
         "request_path":       request_path,
         "strip_request_path": strip_request_path,
         "upstream_url":       upstream_url,
-      }.to_json
+      }
     end
 
     def serialize

@@ -12,6 +12,10 @@ module Biplane
       credentials: Array(CredentialConfig),
     })
 
+    def as_params
+      {"username": username}
+    end
+
     def acls
       ChildCollection.new(@acls)
     end

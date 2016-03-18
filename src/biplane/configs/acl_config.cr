@@ -9,6 +9,10 @@ module Biplane
       group: String,
     })
 
+    def as_params
+      serialize
+    end
+
     def serialize
       {"group": group}
     end

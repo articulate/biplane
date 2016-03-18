@@ -94,7 +94,7 @@ module Biplane
       headers = HTTP::Headers.new
       headers.add("Content-Type", "application/json")
 
-      response = @client.post(config.collection_route.to_s, headers, config.as_params) as HTTP::Client::Response
+      response = @client.post(config.collection_route.to_s, headers, config.as_params.to_json) as HTTP::Client::Response
 
       case response.status_code
       when 201

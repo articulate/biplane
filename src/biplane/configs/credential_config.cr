@@ -16,6 +16,10 @@ module Biplane
       route(collection_key, {name: name})
     end
 
+    def as_params
+      attributes
+    end
+
     def serialize
       {
         "name":       name,

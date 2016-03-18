@@ -22,7 +22,7 @@ module Biplane
       plugin.as_params.should eq({
         "name":             "acl",
         "config.whitelist": "docs-auth,google-auth",
-      }.to_json)
+      })
     end
   end
 end
