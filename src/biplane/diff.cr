@@ -13,7 +13,7 @@ module Biplane
     end
 
     def changed?
-      @local != @remote
+      @remote != @local
     end
 
     def added?
