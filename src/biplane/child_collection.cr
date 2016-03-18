@@ -7,10 +7,6 @@ module Biplane
 
     delegate empty?, last, @collection
 
-    macro typeless_hash(k, values)
-      { "#{k}" => {{values}} }
-    end
-
     def initialize(@collection : Array(T), @parent = nil)
       @collection.map! {|item| item.parent = @parent; item } unless @parent.nil?
     end
@@ -54,7 +50,8 @@ module Biplane
         other_inst = other.lookup(k)
 
         result = compare(this_inst, other_inst)
-        typeless_hash(k, result) if result && !result.empty?
+
+        { k => result } if result && !result.empty?
       end.compact
 
       diffs.empty? ? nil : diffs.reduce {|memo, item| memo.merge(item) }
