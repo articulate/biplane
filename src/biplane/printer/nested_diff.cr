@@ -10,8 +10,14 @@ module Biplane::Printer
 
     def print(diff : Hash, indent_level : Int32)
       diff.each do |k, v|
-        print_at_indent("#{k}:", indent_level)
-        print(v, indent_level + 1)
+        if v.is_a?(Diff) && v.added?
+          print_addition(k, indent_level)
+        elsif v.is_a?(Diff) && v.removed?
+          print_removal(k, indent_level)
+        else
+          print_at_indent("#{k}:", indent_level)
+          print(v, indent_level + 1)
+        end
       end
     end
 
@@ -32,6 +38,14 @@ module Biplane::Printer
 
     def print(diff, indent_level : Int32)
       print_at_indent(diff.to_s, indent_level)
+    end
+
+    private def print_addition(key, indent_level : Int32)
+      print_at_indent("+ #{key}".colorize(:green).to_s, indent_level)
+    end
+
+    private def print_removal(key, indent_level : Int32)
+      print_at_indent("- #{key}".colorize(:red).to_s, indent_level)
     end
 
     private def print_at_indent(string : String, indent_level : Int32)
