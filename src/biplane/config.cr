@@ -12,6 +12,10 @@ module Biplane
       def works_with
         {{ @type.name.gsub(/Config/, "").id }}
       end
+
+      def ==(other : {{ @type.name.gsub(/Config/, "").id }})
+        other == self
+      end
     end
 
     private def route(route_key, params = {} of Symbol => String)

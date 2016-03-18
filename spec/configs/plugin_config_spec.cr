@@ -6,6 +6,10 @@ module Biplane
     parent = yaml_fixture(ApiConfig)
     plugin.parent = parent
 
+    it "can compare in reverse" do
+      plugin.should eq json_fixture(Plugin)
+    end
+
     it "knows collection path" do
       plugin.collection_route.should be_a(Route)
       plugin.collection_route.to_s.should eq "/apis/#{parent.name}/plugins"
