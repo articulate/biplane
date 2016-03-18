@@ -1,10 +1,9 @@
 module Biplane::Mixins
   module Nestable
-    macro child_collection(plural_type, lookup = {} of Symbol => String)
-      # Lookup method for a child collection
+    macro child_collection(plural_type)
       def {{plural_type}}
         @{{plural_type}} ||= begin
-          children = client.{{plural_type}}({{lookup}})
+          children = client.{{plural_type}}({child_key => lookup_key})
           ChildCollection.new(children, self)
         end
       end

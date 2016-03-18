@@ -6,7 +6,7 @@ module Biplane
     include Mixins::Nested
 
     diff_attrs username, credentials, acls
-    child_collection(acls, {username: username})
+    child_collection(acls)
     child_key username
 
     property! credentials

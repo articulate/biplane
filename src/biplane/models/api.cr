@@ -6,7 +6,7 @@ module Biplane
     include Mixins::Nested
 
     diff_attrs name, request_path, strip_request_path, upstream_url, plugins
-    child_collection(plugins, {name: name})
+    child_collection(plugins)
     child_key name
 
     JSON.mapping({
