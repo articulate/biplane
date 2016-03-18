@@ -87,7 +87,7 @@ module Biplane
     {% end %}
 
     def create(diff : Diff)
-      create(diff.local)
+      create(diff.local as Config)
     end
 
     def create(config : Config)
@@ -95,20 +95,19 @@ module Biplane
       headers.add("Content-Type", "application/json")
 
       response = @client.post(config.collection_route.to_s, headers, config.as_params.to_json) as HTTP::Client::Response
+      @client.close # close immediately since we might make nested requests
 
       case response.status_code
       when 201
         puts "Created #{config.member_key.to_s} '#{config.lookup_key}'!".colorize(:green)
-        build(config.works_with, JSON.parse(response.body).as_h)
+        config.nested.each { |c| create(c) } if config.nested.any?
       else
         raise APIError.new("Invalid API response (status code #{response.status_code}): #{response.body}")
       end
-    ensure
-      @client.close
     end
 
     def destroy(diff : Diff)
-      destroy(diff.remote)
+      destroy(diff.remote as Model)
     end
 
     def destroy(object : Model)
