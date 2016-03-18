@@ -30,8 +30,9 @@ module Biplane
         cmd.use = "biplane"
         cmd.long = "Biplane manages your config changes to a Kong instance"
 
+        # Apply config to api
         cmd.commands.add do |cmd|
-          cmd.use = "apply config.yaml"
+          cmd.use = "apply [filename]"
           cmd.short = "Apply config to Kong instance"
           cmd.long = cmd.short
           cmd.run do |options, arguments|
@@ -40,6 +41,7 @@ module Biplane
           end
         end
 
+        # Dump api
         cmd.commands.add do |cmd|
           cmd.use = "dump [filename]"
           cmd.short = "Retrieve current Kong config"
@@ -80,6 +82,7 @@ module Biplane
           end
         end
 
+        # Diff api
         cmd.commands.add do |cmd|
           cmd.use = "diff [filename]"
           cmd.short = "Diff Kong instance with local config"
