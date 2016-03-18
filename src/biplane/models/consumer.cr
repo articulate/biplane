@@ -22,7 +22,7 @@ module Biplane
         client.credentials({username: username, name: plugin.name}).each(&.plugin = plugin)
       end.flatten.uniq(&.name)
 
-      @credentials = ChildCollection.new(creds)
+      @credentials = ChildCollection.new(creds, self)
     end
 
     def serialize
