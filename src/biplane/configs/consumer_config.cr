@@ -17,11 +17,11 @@ module Biplane
     end
 
     def acls
-      ChildCollection.new(@acls)
+      ChildCollection.new(@acls, self)
     end
 
     def credentials
-      ChildCollection.new(@credentials)
+      ChildCollection.new(@credentials, self)
     end
 
     def serialize

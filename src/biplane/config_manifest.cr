@@ -6,8 +6,8 @@ module Biplane
     include Mixins::Serialize
 
     YAML.mapping({
-      apis:      Array(ApiConfig),
-      consumers: Array(ConsumerConfig),
+      apis:      {type: Array(ApiConfig), default: [] of ApiConfig},
+      consumers: {type: Array(ConsumerConfig), default: [] of ConsumerConfig},
     })
 
     def_serialize apis, consumers

@@ -26,7 +26,7 @@ module Biplane
     end
 
     def plugins
-      ChildCollection.new(@plugins)
+      ChildCollection.new(@plugins, self)
     end
 
     def as_params
