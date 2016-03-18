@@ -10,6 +10,10 @@ module Biplane
     def flattr
       flatten("config", @obj)
     end
+
+    def raw_flat
+      flatten(@obj as Hash)
+    end
   end
 
   describe Mixins::FlatFormatter do
@@ -33,6 +37,12 @@ module Biplane
       result = Dummy.new([1, 2, 3]).flattr
 
       result.should eq({"config": "1,2,3"})
+    end
+
+    it "flattens raw hashes" do
+      result = Dummy.new({key_one: "one", key_two: "two"}).raw_flat
+
+      result.should eq({"key_one": "one", "key_two": "two"})
     end
 
     it "works with scalar values" do

@@ -28,5 +28,19 @@ module Biplane
         "config.whitelist": "docs-auth,google-auth",
       })
     end
+
+    it "can flatten config" do
+      odd = PluginConfig.from_yaml(YAML.dump({
+        name:       "what",
+        attributes: {
+          "config.whitelist": ["name", "only"],
+        },
+      }))
+
+      odd.as_params.should eq({
+        "name":             "what",
+        "config.whitelist": "name,only",
+      })
+    end
   end
 end

@@ -5,6 +5,13 @@ module Biplane
     credential = yaml_fixture(CredentialConfig)
     credential.parent = parent = yaml_fixture(ConsumerConfig)
 
+    it "can flatten for params" do
+      credential.as_params.should eq({
+        "key":    "xxx",
+        "secret": "yyy",
+      })
+    end
+
     it "knows collection path" do
       credential.collection_route.should be_a(Route)
       credential.collection_route.to_s.should eq "/consumers/#{parent.lookup_key}/#{credential.name}"

@@ -20,7 +20,7 @@ module Biplane
     def as_params
       params = Hash(String, ValueTypes).new
       params["name"] = name
-      params.merge! flatten("config", attributes["config"])
+      params.merge! flatten(attributes)
     end
 
     def serialize

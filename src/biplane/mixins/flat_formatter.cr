@@ -27,6 +27,12 @@ module Biplane::Mixins
       memo
     end
 
+    private def flatten(items)
+      (items as Hash).reduce({} of String => ValueTypes) do |memo, k, v|
+        form_key(memo, k.to_s, v)
+      end
+    end
+
     private def flatten(base_key, item)
       form_key({} of String => ValueTypes, base_key, item)
     end
