@@ -5,13 +5,13 @@ module Biplane
     config = ConfigManifest.new("./spec/fixtures/dummy.yaml")
 
     it "can load from a file path" do
-      config.apis.should be_a(Array(ApiConfig))
+      config.apis.should be_a(ChildCollection(ApiConfig))
     end
 
     it "can load from a file" do
       f = File.open("./spec/fixtures/dummy.yaml")
       config = ConfigManifest.new(f)
-      config.consumers.should be_a(Array(ConsumerConfig))
+      config.consumers.should be_a(ChildCollection(ConsumerConfig))
     end
 
     it "parses entire config" do

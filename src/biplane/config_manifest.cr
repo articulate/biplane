@@ -21,5 +21,13 @@ module Biplane
     ensure
       file.close
     end
+
+    def apis
+      ChildCollection.new(@apis)
+    end
+
+    def consumers
+      ChildCollection.new(@consumers)
+    end
   end
 end

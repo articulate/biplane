@@ -25,6 +25,10 @@ module Biplane
       attributes["upstream_url"].to_s
     end
 
+    def plugins
+      ChildCollection.new(@plugins)
+    end
+
     def as_params
       {
         "name":               name,

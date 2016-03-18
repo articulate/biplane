@@ -12,6 +12,14 @@ module Biplane
       credentials: Array(CredentialConfig),
     })
 
+    def acls
+      ChildCollection.new(@acls)
+    end
+
+    def credentials
+      ChildCollection.new(@credentials)
+    end
+
     def serialize
       {
         "username":    username,
