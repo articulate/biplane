@@ -20,10 +20,15 @@ module Biplane
     end
 
     it "leaves regular hashes alone" do
-      values = {"one": {"two": "three"}, "four": ["numbers", "are", "cool"]}
+      values = {"one": {"two": "three"}}
       result = Dummy.new(values).norm
 
       result.should eq(values)
+    end
+
+    it "knows how to parse arrays from comma-delimited strings" do
+      result = Dummy.new({"four.five": "numbers,are,cool"}).norm
+      result.should eq({"four": {"five": ["numbers", "are", "cool"]}})
     end
 
     it "can merge additional details" do

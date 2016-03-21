@@ -28,7 +28,11 @@ module Biplane::Mixins
       values.map { |v| v as Type }
     end
 
-    private def ensure_type(value : Terminals)
+    private def ensure_type(value : String)
+      (value.includes?(',') ? ensure_type(value.split(',')) : value) as Type
+    end
+
+    private def ensure_type(value : Bool | Int64 | Float64 | Nil)
       value as Type
     end
   end
