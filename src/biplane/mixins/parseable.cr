@@ -21,7 +21,7 @@ module Biplane::Mixins
         values << value if valid_value?(value)
       end
 
-      values
+      array_or_first(values)
     end
 
     private def to_hash(items : Hash(K, V))
@@ -31,6 +31,11 @@ module Biplane::Mixins
         memo[k.to_s] = value if valid_value?(value)
         memo
       end
+    end
+
+    # for diff purposes, return singular element
+    private def array_or_first(array)
+      array.size == 1 ? array.first : array
     end
   end
 end

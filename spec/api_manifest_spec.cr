@@ -34,7 +34,7 @@ module Biplane
               {
                 "name"       => "acl",
                 "attributes" => {
-                  "config" => {"whitelist" => ["google-auth"]},
+                  "config" => {"whitelist" => "google-auth"},
                 },
               },
               {
@@ -43,7 +43,7 @@ module Biplane
                   "config" => {
                     "key_claim_name"   => "aud",
                     "secret_is_base64" => true,
-                    "uri_param_names"  => ["jwt"],
+                    "uri_param_names"  => "jwt",
                   },
                 },
               },
@@ -90,11 +90,11 @@ module Biplane
               "plugins" => {
                 "acl": {"attributes" => {"config" => Diff.new(
                   {"whitelist" => ["trump", "clinton"]},
-                  {"whitelist" => ["google-auth"]},
+                  {"whitelist" => "google-auth"},
                 )}},
                 "jwt": {"attributes" => {"config" => Diff.new(
-                  {"key_claim_name" => "aud", "secret_is_base64" => false, "uri_param_names" => ["jwt"]},
-                  {"key_claim_name" => "aud", "secret_is_base64" => true, "uri_param_names" => ["jwt"]},
+                  {"key_claim_name" => "aud", "secret_is_base64" => false, "uri_param_names" => "jwt"},
+                  {"key_claim_name" => "aud", "secret_is_base64" => true, "uri_param_names" => "jwt"},
                 )}},
               },
             },

@@ -36,9 +36,7 @@ module Biplane
                 "name":       "acl",
                 "attributes": {
                   "config": {
-                    "whitelist": [
-                      "google-auth",
-                    ],
+                    "whitelist": "google-auth",
                   },
                 },
               },
@@ -48,9 +46,7 @@ module Biplane
                   "config": {
                     "key_claim_name":   "aud",
                     "secret_is_base64": true,
-                    "uri_param_names":  [
-                      "jwt",
-                    ],
+                    "uri_param_names":  "jwt",
                   },
                 },
               },

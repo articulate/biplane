@@ -26,9 +26,7 @@ module Biplane
           "config": {
             "key_claim_name":   "aud",
             "secret_is_base64": true,
-            "uri_param_names":  [
-              "jwt",
-            ],
+            "uri_param_names":  "jwt",
           },
           "created_at": 1456414790000,
           "enabled":    true,
@@ -111,7 +109,7 @@ module Biplane
           "plugins":            {
             # modified config
             "acl": {"attributes": {
-              "config": Diff.new({"whitelist": ["google-auth"]}, {} of String => String),
+              "config": Diff.new({"whitelist": "google-auth"}, {} of String => String),
             }},
 
             # removed a plugin
