@@ -14,7 +14,7 @@ module Biplane
     })
 
     def attributes
-      @parsed_attrs ||= @attributes.nil? ? Hash(String, Type).new : to_hash(@attributes) as Hash
+      @parsed_attrs ||= @attributes.nil? ? Hash(String, Type).new : normalize(to_hash(@attributes) as Hash)
     end
 
     def as_params

@@ -9,6 +9,8 @@ require "./configs/*"
 
 module Biplane
   class KongClient
+    include Mixins::NormalizeAttributes
+
     class APIError < Exception; end
 
     class NotFound < Exception; end
@@ -131,7 +133,7 @@ module Biplane
       headers = HTTP::Headers.new
       headers.add("Content-Type", "application/json")
 
-      params = config.as_params.merge({id: object.id})
+      params = normalize(config.as_params, {"id": object.id})
       response = @client.put(config.collection_route.to_s, headers, params.to_json) as HTTP::Client::Response
 
       case response.status_code
