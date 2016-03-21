@@ -15,7 +15,7 @@ module Biplane
     })
 
     def request_path
-      attributes["request_path"].to_s
+      drop_trailing_slash attributes["request_path"].to_s
     end
 
     def strip_request_path
@@ -45,6 +45,10 @@ module Biplane
         "attributes": to_hash(attributes),
         "plugins":    expand(plugins),
       }
+    end
+
+    private def drop_trailing_slash(string : String)
+      string.sub(/\/$/, "")
     end
   end
 end
