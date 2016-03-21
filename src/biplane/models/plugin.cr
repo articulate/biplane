@@ -1,7 +1,6 @@
 module Biplane
   class Plugin
     include Model(self)
-    include Mixins::FlatFormatter
     include Mixins::JSONToHash
     include Mixins::Nested
 

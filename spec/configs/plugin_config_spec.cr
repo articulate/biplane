@@ -22,14 +22,16 @@ module Biplane
       plugin.member_route.to_s.should eq "/apis/#{parent.name}/plugins/:id"
     end
 
-    it "can flatten config" do
+    it "can present config as params" do
       plugin.as_params.should eq({
-        "name":             "acl",
-        "config.whitelist": "docs-auth,google-auth",
+        "name":   "acl",
+        "config": {
+          "whitelist": ["docs-auth", "google-auth"],
+        },
       })
     end
 
-    it "can flatten config" do
+    it "can read flattened config" do
       odd = PluginConfig.from_yaml(YAML.dump({
         name:       "what",
         attributes: {
@@ -38,8 +40,10 @@ module Biplane
       }))
 
       odd.as_params.should eq({
-        "name":             "what",
-        "config.whitelist": "name,only",
+        "name":   "what",
+        "config": {
+          "whitelist": ["name", "only"],
+        },
       })
     end
   end

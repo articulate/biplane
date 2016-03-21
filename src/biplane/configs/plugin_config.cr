@@ -3,7 +3,7 @@ module Biplane
     include Config(self)
     include Mixins::YamlToHash
     include Mixins::Nested
-    include Mixins::FlatFormatter
+    include Mixins::NormalizeAttributes
 
     child_key name
     getter! parsed_attrs
@@ -18,9 +18,7 @@ module Biplane
     end
 
     def as_params
-      params = Hash(String, ValueTypes).new
-      params["name"] = name
-      params.merge! flatten(attributes)
+      normalize(attributes, {name: name})
     end
 
     def serialize
