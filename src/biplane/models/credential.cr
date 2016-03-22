@@ -1,9 +1,13 @@
+require "openssl/digest"
+
 module Biplane
   class Credential
     include Model(self)
     include Mixins::Nested
 
     diff_attrs name, attributes
+    transformed_diff_attr attributes, digest_password
+
     child_key name
 
     property! plugin
@@ -37,6 +41,17 @@ module Biplane
         "name":       name,
         "attributes": attributes,
       }
+    end
+
+    private def digest_password(other_attrs)
+      return other_attrs unless other_attrs.has_key?("password")
+
+      password = other_attrs["password"]
+      digest = OpenSSL::Digest.new("SHA1")
+      digest << "#{password}#{consumer_id}"
+      other_attrs["password"] = digest.to_s
+
+      other_attrs
     end
   end
 end

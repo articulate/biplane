@@ -16,6 +16,27 @@ module Biplane
       cred.should eq(cfg)
     end
 
+    it "can handle checking hashed passwords" do
+      pw_cred = Credential.from_json({
+        "consumer_id": "f52b5a59-c63a-4afa-92e4-88ac8783c8d8",
+        "created_at":  1456414795000,
+        "id":          "110edeb6-1afc-4f92-a894-724d17bf9325",
+        "username":    "bosh",
+        "password":    "aac0a447e69dfdf4583ea3e8ec91ce597ac37d52",
+      }.to_json)
+      pw_cred.plugin = plugin
+
+      pw_cfg = CredentialConfig.from_yaml(YAML.dump({
+        "name":       plugin.name,
+        "attributes": {
+          "username": "bosh",
+          "password": "testing",
+        },
+      }))
+
+      pw_cred.should eq(pw_cfg)
+    end
+
     describe "different" do
       cfg.name = "yowza"
       cred.secret = "seacrest"
