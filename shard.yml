@@ -8,7 +8,8 @@ license: MIT
 
 dependencies:
   commander:
-    github: meskyanichi/commander
+    github: plukevdh/commander
+    branch: updates-for-crystal-0.13
 
 development_dependencies:
   mock:
