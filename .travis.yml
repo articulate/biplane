@@ -5,13 +5,13 @@ crystal:
 after_success: 
   - make build-release
   - chmod +x ./biplane 
-  - zip biplane.zip ./biplane
+  - zip biplane-linux-x86_64.zip ./biplane
 deploy:
   skip_cleanup: true
   provider: releases
   api_key:
     secure: nwpFsI63fh4q7l/CnCohIwOJpOXUN1WS8TCVpc+fG7rWKygjNCKBBoV5Zc4u0Yuy0fNCbqjVA0QMIup1JKW4+jxMldPVnGVgdBzzHpO+FdPncuFNwS4lGTi5AaXXjxXgjMaXy4rnRc/NjxSdsCfYLRlP5lrjmq1iZEOPDrzPuyPCxx1HFtRnnnv7FFhjGJyoKjEI7IfA0f9QSCUHl7Irc88hZpXfI5bIMJHNXpEJ1pvw4wk59wk2f5c5dqSw/H0Ls2UM3gvdCPn0cIqf7Vtfq5bhldpkFNqFu4XlkZzvnw5e4Y8ewPKQ7pMrZwn8CLLCy37Ec/46supyaYqcP3EOJSIqWrZ+agyWCs61bx7k/11BUDUdsC3zRw49JkdHSqTvZlwk5DiNfg/FbcVSQUmTHH/Lb/ijcKN+xOQp8JKbGGu8xGF/19RgCqo8a5CSw8rxtU5Mq+zNq6QOvSg6qyx5HZqYsthoNc1Wm0VAWch08+CnR07zPG4RO5J36upA1aBzXrznYsF88yhsfoUiXKi21qixSlTMAtCL+7K9gKc/C6rTEuHbn04hATU1mONJoZkCa3/cZJw8ix9MwbrEzOAEMvfqY4pmFG8sspXqa7NxEy6gRbZVhAlnaC2/Y8NpMcaIdbTw0KJio/4n6h91msp9uBc9sKLvOMYDYfTTfmg/qqI=
-  file: biplane.zip
+  file: biplane-linux-x86_64.zip
   on:
     tags: true
 notifications:
