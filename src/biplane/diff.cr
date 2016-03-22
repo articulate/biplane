@@ -56,6 +56,10 @@ module Biplane
       format(details, UI[state], indent_level)
     end
 
+    def format(details : Config | Model, ui : Hash, indent_level : Int32 = 0)
+      format(details.serialize, ui, indent_level)
+    end
+
     def format(details, ui : Hash, indent_level : Int32 = 0)
       string = "#{ui[:symbol]} #{details}".colorize(ui[:color] as Symbol).to_s
       format_at_indent(string, indent_level)
