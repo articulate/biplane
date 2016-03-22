@@ -48,28 +48,28 @@ module Biplane
       puts format
     end
 
-    def format(indent_level = 0 : Int32)
+    def format(indent_level : Int32 = 0)
       format(diff_details, indent_level)
     end
 
-    def format(details, indent_level = 0 : Int32)
+    def format(details, indent_level : Int32 = 0)
       format(details, UI[state], indent_level)
     end
 
-    def format(details, ui : Hash, indent_level = 0 : Int32)
+    def format(details, ui : Hash, indent_level : Int32 = 0)
       string = "#{ui[:symbol]} #{details}".colorize(ui[:color] as Symbol).to_s
       format_at_indent(string, indent_level)
     end
 
-    def format(details : Array, indent_level = 0 : Int32)
+    def format(details : Array, indent_level : Int32 = 0)
       "#{format_removed(details[0], indent_level)}\n#{format_added(details[1], indent_level)}"
     end
 
-    private def format_added(details, indent_level = 0 : Int32)
+    private def format_added(details, indent_level : Int32 = 0)
       format(details, UI[:added], indent_level)
     end
 
-    private def format_removed(details, indent_level = 0 : Int32)
+    private def format_removed(details, indent_level : Int32 = 0)
       format(details, UI[:removed], indent_level)
     end
 

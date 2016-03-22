@@ -9,7 +9,6 @@ license: MIT
 dependencies:
   commander:
     github: meskyanichi/commander
-    version: ~> 0.3.0
 
 development_dependencies:
   mock:

@@ -18,7 +18,7 @@ def build_response(body : Hash | Nil, status = 200)
 end
 
 def build_response(body : String, status = 200)
-  HTTP::Client::Response.new status, body: MemoryIO.new(body)
+  HTTP::Client::Response.new status, body: body
 end
 
 def load_response(type)

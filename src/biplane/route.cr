@@ -24,7 +24,7 @@ module Biplane
       self
     end
 
-    private def interpolate(args = @args, force = false : Bool)
+    private def interpolate(args = @args, force : Bool = false)
       required = @path.scan(KEY).map(&.[1].sub(':', ""))
       diff = (required - args.keys.map(&.to_s))
 

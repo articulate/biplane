@@ -2,7 +2,7 @@ module Biplane::Mixins
   module NormalizeAttributes
     include Parseable
 
-    private def normalize(attrs : Hash, others = Hash(String, Type).new : Hash)
+    private def normalize(attrs : Hash, others : Hash = Hash(String, Type).new)
       res = attrs.reduce({} of String => Type) do |memo, k, v|
         normalize(memo, k.to_s, v)
       end

@@ -34,7 +34,7 @@ module Biplane
     # and `ssl` config (defaults to `true`, meaning it uses the HTTPS scheme)
     #
     # `host` must be a plain hostname, no scheme or port info.
-    def initialize(host : String, port = 8001 : Int, https = true : Bool)
+    def initialize(host : String, port : Int = 8001, https : Bool = true)
       @client = HTTP::Client.new(host, port, ssl: https)
     end
 
