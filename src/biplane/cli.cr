@@ -30,6 +30,18 @@ module Biplane
         cmd.use = "biplane"
         cmd.long = "Biplane manages your config changes to a Kong instance"
 
+        cmd.commands.add do |cmd|
+          cmd.use = "version"
+          cmd.short = "Print biplane version"
+          cmd.long = cmd.short
+
+          cmd.run do |options, arguments|
+            puts VERSION
+
+            nil
+          end
+        end
+
         # Apply config to api
         cmd.commands.add do |cmd|
           cmd.use = "apply [filename]"
