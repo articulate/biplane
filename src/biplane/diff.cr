@@ -11,7 +11,6 @@ module Biplane
     getter! roots
 
     def initialize(@local, @remote, @roots = nil)
-      # raise "Root objects required for non-model diffs" unless  || !@roots.nil?
       @roots ||= [@local, @remote]
     end
 

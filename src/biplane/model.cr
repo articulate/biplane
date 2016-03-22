@@ -18,11 +18,27 @@ module Biplane
       Router.build(member_key, params)
     end
 
+    # Special case methods where we need to transform the "other"
+    # value with knowledge of the "self" value being compared against
+    macro transformed_diff_attr(attr, transformer)
+      def {{attr}}_compare(other : {{T}}Config)
+        transformed = {{transformer}}(other.{{attr}})
+        compare({{attr}}, transformed, other)
+      end
+    end
+
     macro diff_attrs(*attrs)
+      # Build compare methods for each vanilla property
+      {% for attr in attrs %}
+        def {{attr}}_compare(other : {{T}}Config)
+          compare({{attr}}, other.{{attr}}, other)
+        end
+      {% end %}
+
       def diff(other : {{T}}Config)
         {
         {% for attr in attrs %}
-          "{{attr}}": compare({{attr}}, other.{{attr}}, other),
+          "{{attr}}": {{attr}}_compare(other),
         {% end %}
         }.reject {|k, v| v.nil? }
       end
