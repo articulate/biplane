@@ -1,19 +1,29 @@
-language: crystal
-crystal:
-- latest
-- nightly
-after_success: 
-  - make build-release
-  - chmod +x ./biplane 
-  - zip biplane-linux-x86_64.zip ./biplane
+language: generic
+sudo: required
+dist: trusty
+services:
+- docker
+matrix:
+  include:
+  - env: ARCH=x86_64 ARCH_CMD=linux64
+    os: linux
+  - os: osx
+before_install: bin/ci prepare_system
+install: bin/ci prepare_build
+script:
+- bin/ci with_build_env 'make'
+after_success:
+- zip biplane-$TRAVIS_OS_NAME.zip ./biplane
 deploy:
   skip_cleanup: true
   provider: releases
   api_key:
-    secure: nwpFsI63fh4q7l/CnCohIwOJpOXUN1WS8TCVpc+fG7rWKygjNCKBBoV5Zc4u0Yuy0fNCbqjVA0QMIup1JKW4+jxMldPVnGVgdBzzHpO+FdPncuFNwS4lGTi5AaXXjxXgjMaXy4rnRc/NjxSdsCfYLRlP5lrjmq1iZEOPDrzPuyPCxx1HFtRnnnv7FFhjGJyoKjEI7IfA0f9QSCUHl7Irc88hZpXfI5bIMJHNXpEJ1pvw4wk59wk2f5c5dqSw/H0Ls2UM3gvdCPn0cIqf7Vtfq5bhldpkFNqFu4XlkZzvnw5e4Y8ewPKQ7pMrZwn8CLLCy37Ec/46supyaYqcP3EOJSIqWrZ+agyWCs61bx7k/11BUDUdsC3zRw49JkdHSqTvZlwk5DiNfg/FbcVSQUmTHH/Lb/ijcKN+xOQp8JKbGGu8xGF/19RgCqo8a5CSw8rxtU5Mq+zNq6QOvSg6qyx5HZqYsthoNc1Wm0VAWch08+CnR07zPG4RO5J36upA1aBzXrznYsF88yhsfoUiXKi21qixSlTMAtCL+7K9gKc/C6rTEuHbn04hATU1mONJoZkCa3/cZJw8ix9MwbrEzOAEMvfqY4pmFG8sspXqa7NxEy6gRbZVhAlnaC2/Y8NpMcaIdbTw0KJio/4n6h91msp9uBc9sKLvOMYDYfTTfmg/qqI=
-  file: biplane-linux-x86_64.zip
+    secure: wgl5GrwXl6jLcW6Vpb1DIJAdZpHHloHzzFJMcLJ49aGRz7VzAyFf+TfQhliJ1Xnw7et4pWo5fHty1wdh7Br9u1TUsgGeBG1ljMOSL6xJPjP0US7NXyJoUUpWHfCoZcpSyzCZpvdWYtBtn4hFeeMnvPEsQuwUIt5UIx/GQUST8Ud8nddn9BudSLpU1esJQZUA5pIbM5mMndPgJj/QfGk0yZrZcVWibaJJ2F1Er8jqHSEf0WjLVrHTcQIjWx6UiD3zmyA5bRPSFikxl+xUODvOA+t9dSP50L/WVoiRGWgphttCc/M+4gF7o5iPuIzzFM7lPEF3j2SJGo22lQE/wS+bXviHOXz0ef6ByTC7YwsUW2k39NM1o0mOMWD0qPjaVAnaJix2ViTgZ0jgCA55qZ9RBEAErVMNmzleR2T8FsUtq1yKbAhj307CP6fnN0n4Lttm3rp+D238CPJ19K5YbK6xkWmadgpw7sBR/M5jSgWbxm2yQxzFkbM2zATPSyJEpf563fhvMQT4tyyuPb+BY93y1MCGyMpaxbf1O32nRK8lwyb+6HfJmdu5w+fW8T+SzsOvjLddrJrriY6eoyL55IqmoDCBtfcT9fjh9t/UIaN5oxHwvzex5nlzcuy2ph6qU5Ru4XA+6wlgdbPxKuau12TDEnaimWdLJgAC0SeX+/kwp0Q=
+  file: 
+    - distro-$TRAVIS_OS_NAME.zip
   on:
     tags: true
 notifications:
   slack:
     secure: VI1gD1I8chUxWLQUAPm+Iea5U7wm/6Gzf6KOAtN9/NcnhaXSkIKFvPe7bm3GPXVSnJmpGcK6bIEblybm35p2QpfXnyQYYNf0GKGRrwDL7k9g0XKcjNshO2TM7D0ZVNYQTs0leGypQU4PdS0xhg3SkIigz6UcLeadBIp8OXQ3U/Afh72i2r0x3UgYJ4xkiBwEdKiZ38o4OuJtVcWmBPMv/clEIj5JUkoSCV4JL5K1Ij16Iu8KLWAhHOvjyRmC8NHvX754hf6ZygJlCNdyAqxwmr8NHh2bn2ujwbcBl8z+eS6XorEesgtSgxTgkiUqKnHvxAP2/gzRMLmEEoKpVu/68OvOstnwtqClelj9tBtzRp1uaylhacM1sw3rmbrEjl7dQRPzt50yzb6T+H/YPcnYcOAHPEGT6wuVgKeyVCWmHaHxgu75Tf6nWc0RI7dyKphkVGjGueoB/opsfxeN9itRwQCHujQ0nu1wsNQa8n/Ersd5Q6cGXctvQ+w+XYY1b+/reIwnIy0/ty5bkYAkZC3bS5p7Suxo6QFicuysqaHlylXoa1xV97w7rYCF2xpJYQSPfB5SvQqkOIvmLNkNqIQ8WQ3YeIviKOx0hdJ9f6ysye9+G1EnvlpRjpafEtFWu/UBJqM+3kx2yUYiq0pQ/M+u2VleU3iCa+KV2de9oBjGoIQ=
+

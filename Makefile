@@ -1,7 +1,7 @@
 DOCKER_LOCAL_IP:= $(shell docker-machine ip default)
 VERSION:= $(shell crystal eval 'require "./src/biplane/version"; puts Biplane::VERSION')
 
-all: test build
+all: test build-release
 
 build:
 	crystal build src/biplane.cr
