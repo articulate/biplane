@@ -13,14 +13,14 @@ install: bin/ci prepare_build
 script:
 - bin/ci with_build_env 'make'
 after_success:
-- zip biplane-$TRAVIS_OS_NAME.zip ./biplane
+- mv ./biplane biplane-$TRAVIS_OS_NAME
 deploy:
   skip_cleanup: true
   provider: releases
   api_key:
     secure: wgl5GrwXl6jLcW6Vpb1DIJAdZpHHloHzzFJMcLJ49aGRz7VzAyFf+TfQhliJ1Xnw7et4pWo5fHty1wdh7Br9u1TUsgGeBG1ljMOSL6xJPjP0US7NXyJoUUpWHfCoZcpSyzCZpvdWYtBtn4hFeeMnvPEsQuwUIt5UIx/GQUST8Ud8nddn9BudSLpU1esJQZUA5pIbM5mMndPgJj/QfGk0yZrZcVWibaJJ2F1Er8jqHSEf0WjLVrHTcQIjWx6UiD3zmyA5bRPSFikxl+xUODvOA+t9dSP50L/WVoiRGWgphttCc/M+4gF7o5iPuIzzFM7lPEF3j2SJGo22lQE/wS+bXviHOXz0ef6ByTC7YwsUW2k39NM1o0mOMWD0qPjaVAnaJix2ViTgZ0jgCA55qZ9RBEAErVMNmzleR2T8FsUtq1yKbAhj307CP6fnN0n4Lttm3rp+D238CPJ19K5YbK6xkWmadgpw7sBR/M5jSgWbxm2yQxzFkbM2zATPSyJEpf563fhvMQT4tyyuPb+BY93y1MCGyMpaxbf1O32nRK8lwyb+6HfJmdu5w+fW8T+SzsOvjLddrJrriY6eoyL55IqmoDCBtfcT9fjh9t/UIaN5oxHwvzex5nlzcuy2ph6qU5Ru4XA+6wlgdbPxKuau12TDEnaimWdLJgAC0SeX+/kwp0Q=
   file: 
-    - distro-$TRAVIS_OS_NAME.zip
+    - biplane-$TRAVIS_OS_NAME
   on:
     tags: true
 notifications:
