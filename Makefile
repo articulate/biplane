@@ -12,7 +12,7 @@ build-release:
 test:
 	crystal spec
 
-release: build
+release: all
 	git tag $(VERSION)
 	git push origin tag $(VERSION)
 
