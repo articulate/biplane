@@ -44,6 +44,49 @@ module Biplane
           end
         end
 
+        # Config settings
+        cmd.commands.add do |cmd|
+          cmd.use = "config [cmd] [options]"
+          cmd.short = "Set biplane configuration options"
+          cmd.long = <<-DESC
+          Commands available:
+            `set key=value [key=value...]`
+            `get key [key...]`
+            `remove key [key...]`
+          DESC
+
+          cmd.run do |options, arguments|
+            if arguments.empty?
+              values = setup.show
+              if values.empty?
+                puts "(nothing set)"
+              else
+                puts values
+              end
+              exit(0)
+            end
+
+            cmd = arguments.shift
+
+            case cmd
+            when "set"
+              setup.set(arguments)
+            when "get"
+              values = setup.gets(arguments)
+
+              if values.empty?
+                puts "(nothing found)"
+              else
+                puts arguments.zip(values).map(&.join("=")).join("\n")
+              end
+            when "remove"
+              setup.remove(arguments)
+            else
+              puts "'#{cmd}' is not a valid config action. Available actions are show, get, set and remove".colorize(:yellow)
+            end
+          end
+        end
+
         # Apply config to api
         cmd.commands.add do |cmd|
           cmd.use = "apply [filename]"
