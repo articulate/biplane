@@ -2,30 +2,32 @@ require "commander"
 
 module Biplane
   class CLI
-    @@host_flag = Commander::Flag.new do |flag|
-      flag.name = "host"
-      flag.short = "-H"
-      flag.long = "--host"
-      flag.default = ""
-      flag.description = "Kong host"
-    end
-
-    @@port_flag = Commander::Flag.new do |flag|
-      flag.name = "port"
-      flag.short = "-p"
-      flag.long = "--port"
-      flag.default = 8001
-      flag.description = "Kong admin port"
-    end
-
-    @@https_flag = Commander::Flag.new do |flag|
-      flag.name = "disable_https"
-      flag.long = "--no-https"
-      flag.default = false
-      flag.description = "Disable HTTPS"
-    end
-
     def initialize
+      setup = Setup.new
+
+      host_flag = Commander::Flag.new do |flag|
+        flag.name = "host"
+        flag.short = "-H"
+        flag.long = "--host"
+        flag.default = setup.get_string("kong.host", "")
+        flag.description = "Kong host"
+      end
+
+      port_flag = Commander::Flag.new do |flag|
+        flag.name = "port"
+        flag.short = "-p"
+        flag.long = "--port"
+        flag.default = setup.get_int("kong.port", 8001)
+        flag.description = "Kong admin port"
+      end
+
+      https_flag = Commander::Flag.new do |flag|
+        flag.name = "disable_https"
+        flag.long = "--no-https"
+        flag.default = setup.get_bool("kong.useHttps", false)
+        flag.description = "Disable HTTPS"
+      end
+
       @cmd = Commander::Command.new do |cmd|
         cmd.use = "biplane"
         cmd.long = "Biplane manages your config changes to a Kong instance"
@@ -48,7 +50,7 @@ module Biplane
           cmd.short = "Apply config to Kong instance"
           cmd.long = cmd.short
 
-          cmd.flags.add @@host_flag, @@port_flag, @@https_flag
+          cmd.flags.add host_flag, port_flag, https_flag
           cmd.run do |options, arguments|
             filename = arguments[0] as String
             host = options.string["host"]
@@ -72,7 +74,7 @@ module Biplane
           cmd.short = "Retrieve current Kong config"
           cmd.long = cmd.short
 
-          cmd.flags.add @@host_flag, @@port_flag, @@https_flag
+          cmd.flags.add host_flag, port_flag, https_flag
           cmd.flags.add do |flag|
             flag.name = "format"
             flag.long = "--format"
@@ -119,7 +121,7 @@ module Biplane
           cmd.short = "Diff Kong instance with local config"
           cmd.long = cmd.short
 
-          cmd.flags.add @@host_flag, @@port_flag, @@https_flag
+          cmd.flags.add host_flag, port_flag, https_flag
           cmd.flags.add do |flag|
             flag.name = "format"
             flag.long = "--format"
