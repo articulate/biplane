@@ -44,7 +44,7 @@ Config can also be dumped to `stdout` if no output file is specified. The format
 
 A dumped file might look like the following:
 
-```ymal
+```yaml
 ---
 apis:
   - name: products_admin_api
