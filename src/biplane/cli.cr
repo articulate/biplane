@@ -24,7 +24,7 @@ module Biplane
       https_flag = Commander::Flag.new do |flag|
         flag.name = "disable_https"
         flag.long = "--no-https"
-        flag.default = setup.get_bool("kong.useHttps", false)
+        flag.default = setup.get_bool("kong.https", false)
         flag.description = "Disable HTTPS"
       end
 
