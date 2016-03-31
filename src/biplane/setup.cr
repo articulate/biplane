@@ -6,17 +6,21 @@ module Biplane
 
     TYPE_MAP = {
       string: String,
-      int:    Int64 | Int32,
       float:  Float64,
       bool:   Bool,
     }
 
     macro define_getters
       {% for type, klass in TYPE_MAP %}
-        def get_{{type.id}}(key, default : {{klass}} = nil)
+        def get_{{type.id}}(key, default : {{klass}})
           get(key, default) as {{klass}}
         end
       {% end %}
+    end
+
+    # Multi-type special case
+    def get_int(key, default : Int32 | Int64)
+      get(key, default.to_i64) as Int64
     end
 
     define_getters

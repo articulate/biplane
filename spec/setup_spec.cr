@@ -12,6 +12,24 @@ module Biplane
       })
     end
 
+    describe "non-existant config" do
+      new_path = "./spec/fixtures/nope.json"
+
+      it "generates new" do
+        File.exists?(new_path).should be_false
+
+        Setup.new(new_path)
+        File.exists?(new_path).should be_true
+      end
+
+      it "can read empty" do
+        cfg = Setup.new(new_path)
+        cfg.config.empty?.should be_true
+      end
+
+      File.delete new_path
+    end
+
     describe "show" do
       it "prints the full confiug" do
         setup.show.should eq "test=1\nother=two\nshallow=true"
@@ -47,21 +65,21 @@ module Biplane
 
     describe "typed getters" do
       it "can cast ints" do
-        int = setup.get_int("test")
+        int = setup.get_int("test", 800)
 
         int.should be_a(Int64)
         int.should eq(1)
       end
 
       it "can cast bools" do
-        bool = setup.get_bool(:shallow)
+        bool = setup.get_bool(:shallow, true)
 
         bool.should be_a(Bool)
         bool.should eq(true)
       end
 
       it "can cast strings" do
-        string = setup.get_string("other")
+        string = setup.get_string("other", "hello")
 
         string.should be_a(String)
         string.should eq("two")
@@ -69,7 +87,7 @@ module Biplane
 
       it "raises error if value isn't expected type" do
         expect_raises Exception, /cast to String/ do
-          setup.get_string(:test)
+          setup.get_string(:test, "yes")
         end
       end
     end
