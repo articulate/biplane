@@ -61,8 +61,7 @@ module Biplane
     end
 
     def format(details, ui : Hash, indent_level : Int32 = 0)
-      string = "#{ui[:symbol]} #{details}".colorize(ui[:color] as Symbol).to_s
-      format_at_indent(string, indent_level)
+      format_at_indent(details.to_s, ui, indent_level)
     end
 
     def format(details : Array, indent_level : Int32 = 0)
@@ -77,9 +76,9 @@ module Biplane
       format(details, UI[:removed], indent_level)
     end
 
-    private def format_at_indent(string : String, indent_level : Int32)
+    private def format_at_indent(string : String, ui : Hash, indent_level : Int32)
       indents = Array.new(indent_level, "  ").join("")
-      indents + string
+      ((ui[:symbol] as String) + indents + string).colorize(ui[:color] as Symbol).to_s
     end
 
     def ==(other : Diff)

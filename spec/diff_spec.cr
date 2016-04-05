@@ -8,7 +8,7 @@ module Biplane
 
         diff.added?.should be_true
         diff.state.should eq :added
-        diff.format.should eq "\e[32m+ 1\e[0m"
+        diff.format.should eq "\e[32m+1\e[0m"
       end
 
       it "removed?" do
@@ -16,7 +16,7 @@ module Biplane
 
         diff.removed?.should be_true
         diff.state.should eq :removed
-        diff.format.should eq "\e[31m- 1\e[0m"
+        diff.format.should eq "\e[31m-1\e[0m"
       end
 
       it "changed?" do
@@ -24,7 +24,7 @@ module Biplane
 
         diff.changed?.should be_true
         diff.state.should eq :changed
-        diff.format.should eq "\e[31m- 2\e[0m\n\e[32m+ 1\e[0m"
+        diff.format.should eq "\e[31m-2\e[0m\n\e[32m+1\e[0m"
       end
 
       it "not changed" do

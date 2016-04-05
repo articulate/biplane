@@ -41,16 +41,20 @@ module Biplane::Printer
     end
 
     private def print_addition(key, indent_level : Int32)
-      print_at_indent("+ #{key}".colorize(:green).to_s, indent_level)
+      print_at_indent(key, indent_level, "+", :green)
     end
 
     private def print_removal(key, indent_level : Int32)
-      print_at_indent("- #{key}".colorize(:red).to_s, indent_level)
+      print_at_indent(key, indent_level, "-", :red)
     end
 
-    private def print_at_indent(string : String, indent_level : Int32)
+    private def print_at_indent(string : String, indent_level : Int32, prefix : String = "", color : Symbol = nil)
       indents = Array.new(indent_level, "  ").join("")
-      puts indents + string
+
+      text = (prefix + indents + string)
+      text = text.colorize(color) if color
+
+      puts text
     end
   end
 end
