@@ -78,7 +78,10 @@ module Biplane
 
     private def format_at_indent(string : String, ui : Hash, indent_level : Int32)
       indents = Array.new(indent_level, "  ").join("")
-      ((ui[:symbol] as String) + indents + string).colorize(ui[:color] as Symbol).to_s
+      formatted = (ui[:symbol] as String) + indents + string
+      formatted = formatted.colorize(ui[:color] as Symbol) if $COLORIZE
+
+      formatted
     end
 
     def ==(other : Diff)

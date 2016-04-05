@@ -52,7 +52,7 @@ module Biplane::Printer
       indents = Array.new(indent_level, "  ").join("")
 
       text = (prefix + indents + string)
-      text = text.colorize(color) if color
+      text = text.colorize(color) if color && $COLORIZE
 
       puts text
     end

@@ -1,9 +1,18 @@
 require "commander"
 
 module Biplane
+  $COLORIZE = true
+
   class CLI
     def initialize
       setup = Setup.new
+
+      color_flag = Commander::Flag.new do |flag|
+        flag.name = "raw"
+        flag.long = "--raw"
+        flag.default = setup.get_bool("raw", false)
+        flag.description = "Print output without color"
+      end
 
       uri_flag = Commander::Flag.new do |flag|
         flag.name = "uri"
@@ -100,8 +109,10 @@ module Biplane
           cmd.short = "Apply config to Kong instance"
           cmd.long = cmd.short
 
-          cmd.flags.add host_flag, port_flag, https_flag, uri_flag
+          cmd.flags.add host_flag, port_flag, https_flag, uri_flag, color_flag
           cmd.run do |options, arguments|
+            set_global_flags(options)
+
             filename = arguments[0] as String
             client = create_client(options)
 
@@ -167,7 +178,7 @@ module Biplane
           cmd.short = "Diff Kong instance with local config"
           cmd.long = cmd.short
 
-          cmd.flags.add host_flag, port_flag, https_flag, uri_flag
+          cmd.flags.add host_flag, port_flag, https_flag, uri_flag, color_flag
           cmd.flags.add do |flag|
             flag.name = "format"
             flag.long = "--format"
@@ -176,6 +187,8 @@ module Biplane
             flag.description = "Output format for diff output (nested, flat)"
           end
           cmd.run do |options, arguments|
+            set_global_flags(options)
+
             filename = arguments[0] as String
             format = options.string["format"]
 
@@ -198,6 +211,10 @@ module Biplane
 
     def run(args : Array(String))
       Commander.run(@cmd, args)
+    end
+
+    private def set_global_flags(options)
+      $COLORIZE = !options.bool["raw"]
     end
 
     private def create_client(options)
