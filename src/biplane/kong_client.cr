@@ -38,6 +38,11 @@ module Biplane
       @client = HTTP::Client.new(host, port, ssl: https)
     end
 
+    # Create a KongClient from a `URI`
+    def initialize(uri : URI)
+      @client = HTTP::Client.new(uri)
+    end
+
     # Create a KongClient from a pre-configured HTTP client. This allows
     # you to configure your own HTTP client as you wish and then pass it directly
     # to KongClient. Must respond to `get(path)` with the root URL set

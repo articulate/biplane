@@ -5,6 +5,13 @@ module Biplane
     def initialize
       setup = Setup.new
 
+      uri_flag = Commander::Flag.new do |flag|
+        flag.name = "uri"
+        flag.long = "--uri"
+        flag.default = setup.get_string("kong.uri", "")
+        flag.description = "Kong uri (schema, host, port). Will override host/port/no-https flags."
+      end
+
       host_flag = Commander::Flag.new do |flag|
         flag.name = "host"
         flag.short = "-H"
@@ -93,12 +100,10 @@ module Biplane
           cmd.short = "Apply config to Kong instance"
           cmd.long = cmd.short
 
-          cmd.flags.add host_flag, port_flag, https_flag
+          cmd.flags.add host_flag, port_flag, https_flag, uri_flag
           cmd.run do |options, arguments|
             filename = arguments[0] as String
-            host = options.string["host"]
-            port = options.int["port"]
-            client = KongClient.new(host, port, !options.bool["disable_https"])
+            client = create_client(options)
 
             manifest = ApiManifest.new(client)
             config = ConfigManifest.new(filename)
@@ -117,7 +122,7 @@ module Biplane
           cmd.short = "Retrieve current Kong config"
           cmd.long = cmd.short
 
-          cmd.flags.add host_flag, port_flag, https_flag
+          cmd.flags.add host_flag, port_flag, https_flag, uri_flag
           cmd.flags.add do |flag|
             flag.name = "format"
             flag.long = "--format"
@@ -128,13 +133,11 @@ module Biplane
 
           cmd.run do |options, arguments|
             filename = "STDOUT"
-            host = options.string["host"]
-            port = options.int["port"]
             format = options.string["format"]
 
-            puts "Dumping API from #{host}:#{port} to #{filename}"
+            puts "Dumping API to #{filename}"
 
-            client = KongClient.new(host, port, !options.bool["disable_https"])
+            client = create_client(options)
             serialized = ApiManifest.new(client).serialize
 
             if arguments.empty?
@@ -164,7 +167,7 @@ module Biplane
           cmd.short = "Diff Kong instance with local config"
           cmd.long = cmd.short
 
-          cmd.flags.add host_flag, port_flag, https_flag
+          cmd.flags.add host_flag, port_flag, https_flag, uri_flag
           cmd.flags.add do |flag|
             flag.name = "format"
             flag.long = "--format"
@@ -174,13 +177,11 @@ module Biplane
           end
           cmd.run do |options, arguments|
             filename = arguments[0] as String
-            host = options.string["host"]
-            port = options.int["port"]
             format = options.string["format"]
 
-            puts "Diffing API from #{host}:#{port} to #{filename}"
+            puts "Diffing API to #{filename}"
 
-            client = KongClient.new(host, port, !options.bool["disable_https"])
+            client = create_client(options)
 
             manifest = ApiManifest.new(client)
             config = ConfigManifest.new(filename)
@@ -197,6 +198,22 @@ module Biplane
 
     def run(args : Array(String))
       Commander.run(@cmd, args)
+    end
+
+    private def create_client(options)
+      host = options.string["host"]
+      port = options.int["port"]
+      https = !options.bool["disable_https"]
+
+      uri = URI.parse(options.string["uri"])
+
+      if uri
+        puts "Running against Kong at #{uri.host}:#{uri.port}"
+        KongClient.new(uri)
+      else
+        puts "Running against Kong at #{host}:#{port}"
+        KongClient.new(host, port, https)
+      end
     end
   end
 end
