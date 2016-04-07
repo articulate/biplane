@@ -15,5 +15,7 @@ test:
 	crystal spec
 
 release: all
+	git commit src/biplane/version.cr -m "bump version to $(VERSION)"
+	git push origin master
 	git tag $(VERSION)
 	git push origin tag $(VERSION)
