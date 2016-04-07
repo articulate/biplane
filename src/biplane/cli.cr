@@ -14,6 +14,13 @@ module Biplane
         flag.description = "Print output without color"
       end
 
+      stdin_flag = Commander::Flag.new do |flag|
+        flag.name = "stdin"
+        flag.long = "--stdin"
+        flag.default = false
+        flag.description = "Accept config files from stdin"
+      end
+
       uri_flag = Commander::Flag.new do |flag|
         flag.name = "uri"
         flag.long = "--uri"
@@ -109,15 +116,24 @@ module Biplane
           cmd.short = "Apply config to Kong instance"
           cmd.long = cmd.short
 
-          cmd.flags.add host_flag, port_flag, https_flag, uri_flag, color_flag
+          cmd.flags.add host_flag, port_flag, https_flag, uri_flag, color_flag, stdin_flag
+
+          cmd.flags.add do |flag|
+            flag.name = "format"
+            flag.long = "--format"
+            flag.short = "-f"
+            flag.default = "nested"
+            flag.description = "Output format for diff output (nested, flat)"
+          end
           cmd.run do |options, arguments|
             set_global_flags(options)
+            use_stdin = options.bool["stdin"]
 
-            filename = arguments[0] as String
+            file = use_stdin ? STDIN : arguments[0] as String
             client = create_client(options)
 
             manifest = ApiManifest.new(client)
-            config = ConfigManifest.new(filename)
+            config = ConfigManifest.new(file)
 
             diff = manifest.diff(config)
 
@@ -178,7 +194,7 @@ module Biplane
           cmd.short = "Diff Kong instance with local config"
           cmd.long = cmd.short
 
-          cmd.flags.add host_flag, port_flag, https_flag, uri_flag, color_flag
+          cmd.flags.add host_flag, port_flag, https_flag, uri_flag, color_flag, stdin_flag
           cmd.flags.add do |flag|
             flag.name = "format"
             flag.long = "--format"
@@ -188,16 +204,15 @@ module Biplane
           end
           cmd.run do |options, arguments|
             set_global_flags(options)
+            use_stdin = options.bool["stdin"]
 
-            filename = arguments[0] as String
+            file = use_stdin ? STDIN : arguments[0] as String
             format = options.string["format"]
-
-            puts "Diffing API to #{filename}"
 
             client = create_client(options)
 
             manifest = ApiManifest.new(client)
-            config = ConfigManifest.new(filename)
+            config = ConfigManifest.new(file)
 
             diff = manifest.diff(config)
 

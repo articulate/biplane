@@ -16,7 +16,7 @@ module Biplane
       new File.new(filepath)
     end
 
-    def self.new(file : File)
+    def self.new(file : IO)
       from_yaml(file.gets_to_end)
     ensure
       file.close
