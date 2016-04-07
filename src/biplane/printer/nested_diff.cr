@@ -1,6 +1,6 @@
 module Biplane::Printer
   class NestedDiff
-    include Mixins::Colorize
+    include Mixins::Paint
 
     def initialize(@diff)
     end
@@ -54,7 +54,7 @@ module Biplane::Printer
       indents = Array.new(indent_level, "  ").join("")
 
       text = (prefix + indents + string)
-      puts colorize(text, color)
+      puts paint(text, color)
     end
   end
 end

@@ -2,14 +2,16 @@ require "./printer/*"
 
 module Biplane
   module Printer
-    include Mixins::Colorize
+    extend Mixins::Paint
 
     class EmptyDiff
+      include Mixins::Paint
+
       def initialize(@diff)
       end
 
       def print
-        puts colorize("No differences found!", :green)
+        puts paint("No differences found!", :green)
       end
     end
 
@@ -25,7 +27,7 @@ module Biplane
       begin
         FORMATS[format].new(diff)
       rescue KeyError
-        puts "Could not find formatter for '#{format}' (allowed: nested, flat).".colorize(:red)
+        puts paint("Could not find formatter for '#{format}' (allowed: nested, flat).", :red)
         exit(1)
       end
     end
