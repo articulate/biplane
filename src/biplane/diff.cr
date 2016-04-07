@@ -2,6 +2,8 @@ require "colorize"
 
 module Biplane
   class Diff
+    include Mixins::Colorize
+
     UI = {
       removed: {symbol: "-", color: :red},
       added:   {symbol: "+", color: :green},
@@ -79,9 +81,7 @@ module Biplane
     private def format_at_indent(string : String, ui : Hash, indent_level : Int32)
       indents = Array.new(indent_level, "  ").join("")
       formatted = (ui[:symbol] as String) + indents + string
-      formatted = formatted.colorize(ui[:color] as Symbol).to_s if $COLORIZE
-
-      formatted
+      colorize(formatted, ui[:color] as Symbol)
     end
 
     def ==(other : Diff)

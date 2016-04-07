@@ -2,12 +2,14 @@ require "./printer/*"
 
 module Biplane
   module Printer
+    include Mixins::Colorize
+
     class EmptyDiff
       def initialize(@diff)
       end
 
       def print
-        puts "No differences found!".colorize(:green)
+        puts colorize("No differences found!", :green)
       end
     end
 

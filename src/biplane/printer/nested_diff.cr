@@ -1,5 +1,7 @@
 module Biplane::Printer
   class NestedDiff
+    include Mixins::Colorize
+
     def initialize(@diff)
     end
 
@@ -52,9 +54,7 @@ module Biplane::Printer
       indents = Array.new(indent_level, "  ").join("")
 
       text = (prefix + indents + string)
-      text = text.colorize(color).to_s if color && $COLORIZE
-
-      puts text
+      puts colorize(text, color)
     end
   end
 end
