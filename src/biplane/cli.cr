@@ -1,4 +1,5 @@
 require "commander"
+require "./mixins/paint"
 
 module Biplane
   $COLORIZE = true
