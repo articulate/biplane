@@ -87,6 +87,10 @@ module Biplane
         @remote == other.remote
     end
 
+    def inspect(io : IO)
+      io << {"local": @local, "remote": @remote}.to_s
+    end
+
     private def diff_details
       case state
       when :added

@@ -31,5 +31,9 @@ module Biplane
     def member_route
       route(member_key, {child_key => lookup_key})
     end
+
+    def inspect(io : IO)
+      io << serialize.to_s
+    end
   end
 end
