@@ -1,9 +1,16 @@
 module Biplane
   class DiffApplier
+    include Mixins::Paint
+
     def initialize(@client : KongClient)
     end
 
     def apply(diff : Hash)
+      if diff.empty?
+        puts paint("Nothing to apply!", :green)
+        exit(0)
+      end
+
       diff.each do |name, diff|
         apply(diff)
       end
