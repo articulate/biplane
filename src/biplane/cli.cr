@@ -5,6 +5,8 @@ module Biplane
   $COLORIZE = true
 
   class CLI
+    include Mixins::Paint
+
     def initialize
       setup = Setup.new
 
@@ -113,7 +115,7 @@ module Biplane
 
         # Apply config to api
         cmd.commands.add do |cmd|
-          cmd.use = "apply [filename]"
+          cmd.use = "apply [hash] <filename>"
           cmd.short = "Apply config to Kong instance"
           cmd.long = cmd.short
 
@@ -122,23 +124,50 @@ module Biplane
           cmd.flags.add do |flag|
             flag.name = "format"
             flag.long = "--format"
-            flag.short = "-f"
+            flag.short = "-F"
             flag.default = "nested"
             flag.description = "Output format for diff output (nested, flat)"
           end
+          cmd.flags.add do |flag|
+            flag.name = "checksum"
+            flag.long = "--checksum"
+            flag.short = "-c"
+            flag.default = ""
+            flag.description = "Checksum from diff, required for apply"
+          end
+          cmd.flags.add do |flag|
+            flag.name = "force"
+            flag.long = "--force"
+            flag.short = "-f"
+            flag.default = false
+            flag.description = "Force apply without a checksum"
+          end
           cmd.run do |options, arguments|
             set_global_flags(options)
-            use_stdin = options.bool["stdin"]
+            use_stdin = options.bool["stdin"] || arguments.size == 0
+            checksum = options.string["checksum"]
+            force = options.bool["force"]
+
+            if checksum.empty? && !force
+              puts paint("Must provide checksum.", :red)
+              exit(1)
+            end
 
             file = use_stdin ? STDIN : arguments[0] as String
-            client = create_client(options)
 
+            client = create_client(options)
             manifest = ApiManifest.new(client)
             config = ConfigManifest.new(file)
 
             diff = manifest.diff(config)
+            diff_check = DiffHash.new(diff)
 
-            DiffApplier.new(client).apply(diff)
+            if force || diff_check.equals?(checksum)
+              DiffApplier.new(client).apply(diff)
+            else
+              puts paint("Given checksum (#{checksum}) does not equal checksum of current diff (#{diff_check.hash}).\nPlease run `diff` command again then re-run `apply` with new checksum.", :red)
+              exit(1)
+            end
 
             nil
           end
@@ -218,6 +247,7 @@ module Biplane
             diff = manifest.diff(config)
 
             Printer.new(diff, format).print
+            DiffHash.new(diff).print unless diff.empty?
 
             nil
           end
