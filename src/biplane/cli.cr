@@ -234,19 +234,16 @@ module Biplane
     end
 
     private def create_client(options)
-      host = options.string["host"]
-      port = options.int["port"]
-      https = !options.bool["disable_https"]
+      uri = URI.parse(options.string["uri"]) unless options.string["uri"].empty?
 
-      uri = URI.parse(options.string["uri"])
-
-      if uri
-        puts "Running against Kong at #{uri.host}:#{uri.port}"
-        KongClient.new(uri)
-      else
-        puts "Running against Kong at #{host}:#{port}"
-        KongClient.new(host, port, https)
+      uri ||= URI.new.tap do |uri|
+        uri.scheme = options.bool["disable_https"] ? "http" : "https"
+        uri.host = options.string["host"]
+        uri.port = options.int["port"].to_i32
       end
+
+      puts "Running against Kong at #{uri.host}:#{uri.port}"
+      KongClient.new(uri)
     end
   end
 end
