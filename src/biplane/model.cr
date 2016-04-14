@@ -7,6 +7,10 @@ module Biplane
 
     property! client
 
+    def inspect(io : IO)
+      io << serialize.to_s
+    end
+
     macro def member_key : Symbol
       :{{ @type.name.split("::").last.downcase }}
     end
