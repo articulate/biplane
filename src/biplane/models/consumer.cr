@@ -12,9 +12,8 @@ module Biplane
     property! credentials
 
     JSON.mapping({
-      created_at: {type: Time, converter: Mixins::TimeFromMilli},
-      id:         String,
-      username:   String,
+      id:       String,
+      username: String,
     })
 
     def cache_credentials(plugins)

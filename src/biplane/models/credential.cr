@@ -14,7 +14,6 @@ module Biplane
 
     JSON.mapping({
       consumer_id: String,
-      created_at:  {type: Time, converter: Mixins::TimeFromMilli},
       id:          String,
       key:         {type: String, nilable: true},
       secret:      {type: String, nilable: true},

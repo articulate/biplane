@@ -10,12 +10,11 @@ module Biplane
     getter! attributes
 
     JSON.mapping({
-      created_at: {type: Time, converter: Mixins::TimeFromMilli},
-      id:         String,
-      api_id:     String,
-      name:       String,
-      config:     Hash(String, JSON::Any),
-      enabled:    Bool,
+      id:      String,
+      api_id:  String,
+      name:    String,
+      config:  Hash(String, JSON::Any),
+      enabled: Bool,
     })
 
     def attributes

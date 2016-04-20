@@ -10,7 +10,6 @@ module Biplane
     child_key name
 
     JSON.mapping({
-      created_at:         {type: Time, converter: Mixins::TimeFromMilli},
       id:                 String,
       name:               String,
       request_path:       String,
