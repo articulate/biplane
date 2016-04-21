@@ -10,6 +10,10 @@ Control your Kong instance through simple configuration.
 
 Download a binary from the [releases page](https://github.com/articulate/biplane/releases) and place somewhere in your `PATH`.
 
+You will likely also need to install libyaml and [bdw-gc](http://braumeister.org/formula/bdw-gc) via Homebrew:
+
+`brew install libyaml bdw-gc`
+
 ## Usage
 
 ### The `--help`
