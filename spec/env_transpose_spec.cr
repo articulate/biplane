@@ -3,13 +3,24 @@ require "./spec_helper"
 module Biplane
   describe EnvTranspose do
     it "creates a hash from a K=V string" do
-      res = EnvTranspose.transpose_env("K=v X=y fake=yes")
+      res = EnvTranspose.transpose_kv_string("K=v X=y fake=yes")
 
       res.should be_a Hash(String, String)
       res.should eq({
         "K":    "v",
         "X":    "y",
         "fake": "yes",
+      })
+    end
+
+    it "creates a hash from a INI file" do
+      res = EnvTranspose.transpose_ini_file("./spec/fixtures/env.ini")
+
+      res.should be_a Hash(String, String)
+      res.should eq({
+        "test": "1",
+        "face": "book",
+        "not":  "true",
       })
     end
 
