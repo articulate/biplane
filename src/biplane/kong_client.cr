@@ -10,6 +10,7 @@ require "./configs/*"
 module Biplane
   class KongClient
     include Mixins::NormalizeAttributes
+    include Mixins::Paint
 
     class APIError < Exception; end
 
@@ -106,7 +107,7 @@ module Biplane
 
       case response.status_code
       when 201
-        puts "Created #{config.member_key.to_s} '#{config.lookup_key}'!".colorize(:green)
+        puts paint("Created #{config.member_key.to_s} '#{config.lookup_key}'!", :green)
         config.nested.each { |c| create(c) } if config.nested.any?
       else
         raise APIError.new("Invalid API response (status code #{response.status_code}): #{response.body}")
@@ -122,7 +123,7 @@ module Biplane
 
       case response.status_code
       when 204
-        puts "#{object.member_key.to_s.capitalize} '#{object.lookup_key}' destroyed!".colorize(:red)
+        puts paint("#{object.member_key.to_s.capitalize} '#{object.lookup_key}' destroyed!", :red)
       else
         raise APIError.new("Invalid API response (status code #{response.status_code}): #{response.body}")
       end
@@ -143,7 +144,7 @@ module Biplane
 
       case response.status_code
       when 200
-        puts "Updated #{config.member_key.to_s} '#{config.lookup_key}'!".colorize(:yellow)
+        puts paint("Updated #{config.member_key.to_s} '#{config.lookup_key}'!", :yellow)
         Diff.new(config, object).print
       else
         raise APIError.new("Invalid API response (status code #{response.status_code}): #{response.body}")
