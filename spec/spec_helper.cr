@@ -1,7 +1,7 @@
 require "spec"
 require "mock"
 
-require "../src/biplane/*"
+require "../src/biplane"
 
 def json_fixture(type)
   base = type.name.split("::").last.downcase

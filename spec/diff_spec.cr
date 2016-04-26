@@ -2,6 +2,8 @@ require "./spec_helper"
 
 module Biplane
   describe Diff do
+    $COLORIZE = true
+
     describe "apis" do
       it "added?" do
         diff = Diff.new(1, nil)

@@ -6,10 +6,10 @@ setup:
 	crystal deps install
 
 build:
-	crystal build src/biplane.cr
+	crystal build src/cli.cr -o biplane
 
 build-release:
-	crystal build --release src/biplane.cr
+	crystal build --release src/cli.cr -o biplane
 
 test:
 	crystal spec
