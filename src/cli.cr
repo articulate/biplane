@@ -292,7 +292,6 @@ cmd = Commander::Command.new do |cmd|
 
       context = read_env_file(options)
       config_yaml = Interpolate.new(file).apply(context)
-      puts config_yaml
 
       manifest = ApiManifest.new(client)
       config = ConfigManifest.from_yaml(config_yaml)
