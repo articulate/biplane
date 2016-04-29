@@ -211,14 +211,18 @@ cmd = Commander::Command.new do |cmd|
       diff = manifest.diff(config)
       diff_check = DiffHash.new(diff)
 
-      if force || diff_check.equals?(checksum)
-        DiffApplier.new(client).apply(diff)
-      else
-        puts paint("Given checksum (#{checksum}) does not equal checksum of current diff (#{diff_check.hash}).\nPlease run `diff` command again then re-run `apply` with new checksum.", :red)
-        exit(1)
-      end
+      begin
+        if force || diff_check.equals?(checksum)
+          DiffApplier.new(client).apply(diff)
+        else
+          puts paint("Given checksum (#{checksum}) does not equal checksum of current diff (#{diff_check.hash}).\nPlease run `diff` command again then re-run `apply` with new checksum.", :red)
+          exit(1)
+        end
 
-      nil
+        nil
+      rescue e : Exception
+        puts paint(e.message, :red)
+      end
     end
   end
 
