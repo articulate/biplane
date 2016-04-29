@@ -13,18 +13,21 @@ module Biplane
     property! plugin
 
     JSON.mapping({
-      consumer_id: String,
-      id:          String,
-      key:         {type: String, nilable: true},
-      secret:      {type: String, nilable: true},
-      username:    {type: String, nilable: true},
-      password:    {type: String, nilable: true},
+      consumer_id:    String,
+      id:             String,
+      key:            {type: String, nilable: true},
+      secret:         {type: String, nilable: true},
+      username:       {type: String, nilable: true},
+      password:       {type: String, nilable: true},
+      key:            {type: String, nilable: true},
+      rsa_public_key: {type: String, nilable: true},
+      algorithm:      {type: String, nilable: true},
     })
 
     macro def attributes : Hash(String, String)
       attrs = Hash(String, String).new
 
-      {% for key in %w(key secret username password) %}
+      {% for key in %w(key secret username password key rsa_public_key algorithm) %}
         attrs[{{key}}] = {{key.id}}.to_s unless {{key.id}}.nil?
       {% end %}
 

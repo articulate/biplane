@@ -1,15 +1,14 @@
 module Biplane
+  class EmptyDiff < Exception; end
+
   class DiffApplier
     include Mixins::Paint
 
-    def initialize(@client : KongClient)
+    def initialize(@client)
     end
 
     def apply(diff : Hash)
-      if diff.empty?
-        puts paint("Nothing to apply!", :green)
-        exit(0)
-      end
+      raise EmptyDiff.new("Nothing to apply!") if diff.empty?
 
       diff.each do |name, diff|
         apply(diff)
@@ -22,16 +21,16 @@ module Biplane
     def apply(diff : Diff)
       return unless diff.changed?
 
-      case diff.state
-      when :removed
-        @client.destroy(diff) if diff.root?
-      when :added
-        @client.create(diff) if diff.root?
-      when :changed
-        if diff.root?
+      if !diff.root?
+        @client.update(diff.roots[0] as Config, diff.roots[1] as Model)
+      else
+        case diff.state
+        when :removed
+          @client.destroy(diff)
+        when :added
+          @client.create(diff)
+        when :changed
           @client.update(diff as Diff)
-        else
-          @client.update(diff.roots[0] as Config, diff.roots[1] as Model)
         end
       end
     end
