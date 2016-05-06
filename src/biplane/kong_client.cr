@@ -88,7 +88,6 @@ module Biplane
         else
           raise APIError.new("Invalid API response (status code #{response.status_code})")
         end
-
       ensure
         @client.close
       end

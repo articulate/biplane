@@ -16,12 +16,12 @@ private def create_client(options)
   uri = URI.parse(options.string["uri"]) unless options.string["uri"].empty?
 
   uri ||= URI.new.tap do |uri|
-    uri.scheme = options.bool["disable_https"] ? "http" : "https"
+    uri.scheme = options.bool["use_https"] ? "https" : "http"
     uri.host = options.string["host"]
     uri.port = options.int["port"].to_i32
   end
 
-  puts "Running against Kong at #{uri.host}:#{uri.port}"
+  puts "Running against Kong at #{uri.to_s}"
   KongClient.new(uri)
 end
 
@@ -86,9 +86,9 @@ port_flag = Commander::Flag.new do |flag|
 end
 
 https_flag = Commander::Flag.new do |flag|
-  flag.name = "disable_https"
+  flag.name = "use_https"
   flag.long = "--no-https"
-  flag.default = setup.get_bool("kong.https", false)
+  flag.default = setup.get_bool("kong.https", true)
   flag.description = "Disable HTTPS"
 end
 
