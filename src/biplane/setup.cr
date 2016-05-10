@@ -77,7 +77,7 @@ module Biplane
     end
 
     def set(key, value)
-      @values[key.to_s] = value
+      @values[key.to_s] = parse_values(value)
       sync
 
       value
@@ -98,6 +98,25 @@ module Biplane
 
     private def sync
       File.write @path, @values.to_pretty_json
+    end
+
+    private def parse_values(item : String)
+      case item
+      when .== "true"
+        true
+      when .== "false"
+        false
+      when .match /^\d+$/
+        item.to_i64
+      when .match /^\d+.\d+$/
+        item.to_f64
+      else
+        item.to_s
+      end
+    end
+
+    private def parse_values(item)
+      item
     end
   end
 end

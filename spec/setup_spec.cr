@@ -120,9 +120,9 @@ module Biplane
         setup.get("hello") { "not this" }.should eq "or this"
       end
 
-      it "can set multiple" do
-        setup.set(["hello=max", "fellow=wax"])
-        setup.gets("hello", "fellow").should eq(["max", "wax"])
+      it "can set multiple and retains types when fetching" do
+        setup.set(["hello=max", "one=1", "nox=true"])
+        setup.gets("hello", "one", "nox").should eq(["max", 1, true])
       end
     end
 
@@ -138,9 +138,10 @@ module Biplane
       end
 
       it "can remove multiple" do
-        setup.remove("hello", "fellow")
+        setup.remove("hello", "one", "nox")
         setup.set?("hello").should be_false
-        setup.set?("fellow").should be_false
+        setup.set?("one").should be_false
+        setup.set?("nox").should be_false
       end
     end
 
