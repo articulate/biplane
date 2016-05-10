@@ -3,12 +3,14 @@ module Biplane
     include Enumerable(T)
 
     getter collection
-    getter! parent
 
     delegate empty?, last, @collection
 
-    def initialize(@collection : Array(T), @parent = nil)
-      @collection.map! {|item| item.parent = @parent; item } unless @parent.nil?
+    def initialize(@collection : Array(T), parent : P)
+      @collection.map! { |item| item.parent = parent; item }
+    end
+
+    def initialize(@collection : Array(T))
     end
 
     def id_key
@@ -16,7 +18,7 @@ module Biplane
     end
 
     def each
-      @collection.each {|item| yield item }
+      @collection.each { |item| yield item }
     end
 
     def lookup(id)
@@ -51,10 +53,10 @@ module Biplane
 
         result = compare(this_inst, other_inst)
 
-        { k => result } if result && !result.empty?
+        {k => result} if result && !result.empty?
       end.compact
 
-      diffs.empty? ? nil : diffs.reduce {|memo, item| memo.merge(item) }
+      diffs.empty? ? nil : diffs.reduce { |memo, item| memo.merge(item) }
     end
 
     # Removal

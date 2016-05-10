@@ -23,10 +23,6 @@ module Biplane
       second_diff,
     ]
 
-    it "knows parent" do
-      collect.parent.should eq parent
-    end
-
     it "sets parent for each nested object" do
       collect.all? { |i| i.parent == parent }.should be_true
     end
