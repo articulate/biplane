@@ -61,7 +61,7 @@ module Biplane
     end
 
     def get(key, default = nil)
-      config.fetch(key.to_s, default) as Terminals
+      parse_values config.fetch(key.to_s, default)
     end
 
     def get(key, default = nil, &block)

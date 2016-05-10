@@ -61,6 +61,26 @@ module Biplane
       it "can get multiple values" do
         setup.gets("test", "hello").should eq([1, nil])
       end
+
+      context "type coercion assumptions" do
+        broken = Setup.new("./spec/fixtures/testing_broken.json")
+
+        it "returns ints if a string is all digits" do
+          broken.get("int").should eq 123
+        end
+
+        it "returns floats if a string is all digits with a single decimal" do
+          broken.get("float").should eq 1.2
+        end
+
+        it "returns booleans is true or false" do
+          broken.get("bool").should be_true
+        end
+
+        it "returns a string otherwise" do
+          broken.set("string", "two")
+        end
+      end
     end
 
     describe "typed getters" do
@@ -123,6 +143,43 @@ module Biplane
       it "can set multiple and retains types when fetching" do
         setup.set(["hello=max", "one=1", "nox=true"])
         setup.gets("hello", "one", "nox").should eq(["max", 1, true])
+      end
+
+      context "type coercion assumptions" do
+        it "returns ints if a string is all digits" do
+          setup.set("coerce", "123")
+          setup.get("coerce").should eq 123
+        end
+
+        it "returns floats if a string is all digits with a single decimal" do
+          setup.set("coerce", "123.4")
+          setup.get("coerce").should eq 123.4
+        end
+
+        it "returns booleans is true or false" do
+          setup.set("coerce", "true")
+          setup.get("coerce").should be_true
+
+          setup.set("coerce", "false")
+          setup.get("coerce").should be_false
+        end
+
+        it "returns a string otherwise" do
+          setup.set("coerce", "not coercable")
+          setup.get("coerce").should eq "not coercable"
+        end
+
+        it "passes thru other types" do
+          setup.set("coerce", 1.to_i64)
+          setup.get("coerce").should eq 1
+        end
+
+        it "passes thru other types" do
+          setup.set("coerce", true)
+          setup.get("coerce").should eq true
+        end
+
+        setup.remove("coerce")
       end
     end
 
