@@ -4,10 +4,10 @@ module Biplane
 
     class MissingParam < Exception; end
 
-    def initialize(@path, @args = {} of String => String)
+    def initialize(@path : String, @args = {} of Symbol => String)
     end
 
-    def to_s(args = {} of String => String, force = false)
+    def to_s(args = {} of Symbol => String, force = false)
       interpolate(@args.merge(args))
     end
 

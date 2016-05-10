@@ -3,6 +3,9 @@ module Biplane
   # It works in a lazy-ish manner, fetching resources only upon request (even though it will fetch
   # *all* of the resources requested at once)
   class ApiManifest
+    @apis : ChildCollection(Api)
+    @consumers : ChildCollection(Consumer)
+
     def initialize(@client : KongClient)
       @apis = ChildCollection.new([] of Api)
       @consumers = ChildCollection.new([] of Consumer)

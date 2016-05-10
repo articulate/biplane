@@ -5,6 +5,8 @@ module Biplane
   module Model(T)
     include Mixins::Parseable
 
+    @client : KongClient?
+
     property! client
 
     def inspect(io : IO)

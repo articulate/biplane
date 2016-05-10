@@ -10,6 +10,8 @@ module Biplane
 
     child_key name
 
+    @plugin : Plugin?
+
     property! plugin
 
     JSON.mapping({

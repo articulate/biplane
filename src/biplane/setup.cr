@@ -4,6 +4,8 @@ module Biplane
   class Setup
     include Mixins::JSONToHash
 
+    @path : String
+
     TYPE_MAP = {
       string: String,
       float:  Float64,

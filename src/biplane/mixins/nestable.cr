@@ -1,6 +1,8 @@
 module Biplane::Mixins
   module Nestable
-    macro child_collection(plural_type)
+    macro child_collection(plural_type, type)
+      @{{plural_type}} : ChildCollection({{type}})?
+
       def {{plural_type}}
         @{{plural_type}} ||= begin
           children = client.{{plural_type}}({child_key => lookup_key})
