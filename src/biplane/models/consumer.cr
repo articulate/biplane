@@ -20,7 +20,7 @@ module Biplane
 
     def cache_credentials(plugins)
       creds = plugins.map do |plugin|
-        client.credentials({username: username, name: plugin.name}).each(&.plugin = plugin)
+        client.credentials({:username => username, :name => plugin.name}).each(&.plugin = plugin)
       end.flatten.uniq(&.name)
 
       @credentials = ChildCollection.new(creds, self)

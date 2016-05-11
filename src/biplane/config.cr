@@ -1,11 +1,13 @@
 module Biplane
   module Config(T)
-    macro def member_key : Symbol
-      :{{ @type.name.split("::").last.downcase.gsub(/config/, "") }}
+    alias Types = AclConfig | ApiConfig | ConsumerConfig | CredentialConfig | PluginConfig
+
+    macro def member_key : String
+      {{ @type.name.split("::").last.downcase.gsub(/config/, "") }}
     end
 
-    macro def collection_key : Symbol
-      :{{ @type.name.split("::").last.downcase.gsub(/config/, "s") }}
+    macro def collection_key : String
+      {{ @type.name.split("::").last.downcase.gsub(/config/, "s") }}
     end
 
     macro included

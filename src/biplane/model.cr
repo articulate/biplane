@@ -14,11 +14,11 @@ module Biplane
     end
 
     macro def member_key : Symbol
-      :{{ @type.name.split("::").last.downcase }}
+      {{ @type.name.split("::").last.downcase }}
     end
 
     def member_route
-      params = {child_key => lookup_key, id: id}
+      params = {child_key => lookup_key, :id => id}
       params[parent.not_nil!.child_key] = parent.not_nil!.lookup_key unless parent.nil?
 
       Router.build(member_key, params)

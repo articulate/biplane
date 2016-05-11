@@ -76,7 +76,7 @@ module Biplane
     #
     {% for name, kind in ENDPOINTS %}
       def {{name.id}}(args = {} of Symbol => String)
-        route = Router.build!({{name}}, args)
+        route = Router.build!("{{name}}", args)
 
         response = @client.get(route.to_s) as HTTP::Client::Response
 

@@ -21,7 +21,6 @@ module Biplane
       secret:         {type: String, nilable: true},
       username:       {type: String, nilable: true},
       password:       {type: String, nilable: true},
-      key:            {type: String, nilable: true},
       rsa_public_key: {type: String, nilable: true},
       algorithm:      {type: String, nilable: true},
     })
