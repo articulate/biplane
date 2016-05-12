@@ -27,8 +27,9 @@ module Biplane
 
     define_getters
 
-    def initialize(file : File)
-      @file = file
+    @path : String
+
+    def initialize(@file : File)
       @path = file.path
       @values = {} of String => Type
 
