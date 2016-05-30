@@ -1,5 +1,7 @@
 module Biplane::Mixins
   module Nested
+    @parent : Model::Types? | Config::Types?
+
     property parent
 
     macro child_key(key)

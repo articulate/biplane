@@ -2,6 +2,8 @@ module Biplane
   class Interpolate
     getter :template
 
+    @template : Crustache::Syntax::Template
+
     def initialize(io : IO)
       @template = Crustache.parse io.gets_to_end
     end

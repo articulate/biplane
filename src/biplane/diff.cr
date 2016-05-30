@@ -10,8 +10,15 @@ module Biplane
     getter local, remote
     getter! roots
 
-    def initialize(@local, @remote, @roots = nil)
-      @roots ||= [@local, @remote]
+    alias RootTypes = Array(Acl | AclConfig) | Array(Api | ApiConfig) | Array(Consumer | ConsumerConfig) | Array(Credential | CredentialConfig) | Array(Plugin | PluginConfig)
+    alias Terminals = Diff | Nil
+    alias Type = Terminals | Array(Type) | Hash(String, Type)
+
+    def initialize(@local : Config::Types | Mixins::Parseable::Type, @remote : Model::Types | Mixins::Parseable::Type)
+      @roots = [@local, @remote]
+    end
+
+    def initialize(@local : Config::Types | Mixins::Parseable::Type, @remote : Model::Types | Mixins::Parseable::Type, @roots : RootTypes)
     end
 
     def root?

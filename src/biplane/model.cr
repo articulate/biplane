@@ -5,6 +5,8 @@ module Biplane
   module Model(T)
     include Mixins::Parseable
 
+    alias Types = Acl | Api | Consumer | Credential | Plugin
+
     @client : KongClient?
 
     property! client

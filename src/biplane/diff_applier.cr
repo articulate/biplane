@@ -4,7 +4,7 @@ module Biplane
   class DiffApplier
     include Mixins::Paint
 
-    def initialize(@client)
+    def initialize(@client : KongClient)
     end
 
     def apply(diff : Hash)
