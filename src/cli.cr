@@ -209,13 +209,13 @@ cmd = Commander::Command.new do |cmd|
       config = ConfigManifest.new(file)
 
       diff = manifest.diff(config)
-      diff_check = DiffHash.new(diff)
+      diff_hash = DiffHash.hash(diff)
 
       begin
-        if force || diff_check.equals?(checksum)
+        if force || diff_hash == checksum
           DiffApplier.new(client).apply(diff)
         else
-          puts paint("Given checksum (#{checksum}) does not equal checksum of current diff (#{diff_check.hash}).\nPlease run `diff` command again then re-run `apply` with new checksum.", :red)
+          puts paint("Given checksum (#{checksum}) does not equal checksum of current diff (#{diff_hash}).\nPlease run `diff` command again then re-run `apply` with new checksum.", :red)
           exit(1)
         end
 
@@ -302,8 +302,12 @@ cmd = Commander::Command.new do |cmd|
 
       diff = manifest.diff(config)
 
-      Printer.new(diff, format).print
-      DiffHash.new(diff).print unless diff.empty?
+      Printer.new(format).print(diff)
+
+      if !diff.empty?
+        hash = DiffHash.hash(diff)
+        puts paint("Diff hash: #{hash}", :cyan)
+      end
 
       nil
     end

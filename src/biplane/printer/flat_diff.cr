@@ -1,11 +1,11 @@
 module Biplane::Printer
   class FlatDiff
-    def initialize(@diff)
-    end
-
-    # base level
-    def print
-      print(@diff)
+    def print(diff)
+      if diff.empty?
+        puts paint("No differences found!", :green)
+      else
+        print(diff)
+      end
     end
 
     def print(diff : Hash, keypath = "")

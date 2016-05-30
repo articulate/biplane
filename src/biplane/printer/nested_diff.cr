@@ -2,12 +2,12 @@ module Biplane::Printer
   class NestedDiff
     include Mixins::Paint
 
-    def initialize(@diff)
-    end
-
-    # base level
-    def print
-      print(@diff, 0)
+    def print(diff)
+      if diff.empty?
+        puts paint("No differences found!", :green)
+      else
+        print(diff, 0)
+      end
     end
 
     def print(diff : Hash, indent_level : Int32)
