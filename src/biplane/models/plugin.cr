@@ -7,8 +7,6 @@ module Biplane
     diff_attrs name, attributes
     child_key name
 
-    getter! attributes
-
     JSON.mapping({
       id:      String,
       api_id:  String,
@@ -18,7 +16,7 @@ module Biplane
     })
 
     def attributes
-      @attributes ||= {"config": to_hash(@config) as Hash}
+      {"config": to_hash(@config) as Hash}
     end
 
     def serialize
