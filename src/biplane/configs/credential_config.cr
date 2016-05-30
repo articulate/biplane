@@ -13,7 +13,7 @@ module Biplane
 
     # Specify this route with the name from the plugin
     def collection_route
-      route(collection_key, {name: name})
+      route(collection_key, {:name => name})
     end
 
     def as_params

@@ -13,7 +13,7 @@ module Biplane
       io << serialize.to_s
     end
 
-    macro def member_key : Symbol
+    macro def member_key : String
       {{ @type.name.split("::").last.downcase }}
     end
 

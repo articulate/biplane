@@ -18,7 +18,7 @@ module Biplane
     end
 
     def as_params
-      normalize(attributes, {name: name})
+      normalize(attributes, {:name => name})
     end
 
     def serialize

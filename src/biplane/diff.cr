@@ -30,13 +30,15 @@ module Biplane
       @local.nil? && !@remote.nil?
     end
 
-    def state
+    def state : Symbol
       if added?
         :added
       elsif removed?
         :removed
       elsif changed?
         :changed
+      else
+        :empty
       end
     end
 
@@ -56,11 +58,11 @@ module Biplane
       format(details, UI[state], indent_level)
     end
 
-    def format(details : Config | Model, ui : Hash, indent_level : Int32 = 0)
+    def format(details : Config | Model, ui : NamedTuple, indent_level : Int32 = 0)
       format(details.serialize, ui, indent_level)
     end
 
-    def format(details, ui : Hash, indent_level : Int32 = 0)
+    def format(details, ui : NamedTuple, indent_level : Int32 = 0)
       format_at_indent(details.to_s, ui, indent_level)
     end
 
@@ -76,7 +78,7 @@ module Biplane
       format(details, UI[:removed], indent_level)
     end
 
-    private def format_at_indent(string : String, ui : Hash, indent_level : Int32)
+    private def format_at_indent(string : String, ui : NamedTuple, indent_level : Int32)
       indents = Array.new(indent_level, "  ").join("")
       formatted = (ui[:symbol] as String) + indents + string
       paint(formatted, ui[:color] as Symbol)
