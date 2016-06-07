@@ -9,8 +9,10 @@ license: MIT
 dependencies:
   commander:
     github: meskyanichi/commander
+    version: 0.3.3
   crustache:
-      github: MakeNowJust/crustache
+    github: MakeNowJust/crustache
+    version: 2.2.3
 
 development_dependencies:
   mock:
