@@ -1,15 +1,19 @@
 FROM jhass/crystal-build-x86_64:0.15.0
 
-RUN mkdir /biplane
+RUN mkdir /opt/biplane
 
-COPY Makefile /biplane/
-COPY shard.* /biplane/
-COPY src/ /biplane/src
-COPY spec/ /biplane/spec
+COPY Makefile /opt/biplane/
+COPY shard.* /opt/biplane/
+COPY src/ /opt/biplane/src
+COPY spec/ /opt/biplane/spec
 
-WORKDIR /biplane
+WORKDIR /opt/biplane
 RUN make setup
 RUN make test
 RUN make build
 
-ENTRYPOINT ["./biplane"]
+RUN mkdir /biplane
+WORKDIR /biplane
+VOLUME /biplane
+
+ENTRYPOINT ["/opt/biplane/biplane"]

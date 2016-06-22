@@ -111,12 +111,26 @@ This will also show the differences as they are applied. If you would rather dry
 
 This will output a colored diff of changes between your local config and the current API. One caveat is that Kong often supplies _and returns_ default values that are not required to be set in the calls to the API. So the diff can often contain differences that you did not set in your config. This **will** trigger an API call when doing an `apply`, however, if they are default values and they remain unchanged in your config, this update will not affect any change. In order to avoid these "false positives", please add any default values supplied by Kong to your config. This is good practice anyways to avoid issues where Kong or plugin vendors might update defaults without your knowledge.
 
+## Building Locally
+
+If you have Crystal 0.15.0 installed (the currently supported version of Crystal), you can simply `make build`
+
+If you don't or can't install 0.15.0, you can build it using the local Dockerfile definition:
+
+`make build-container`
+
+This will install deps, run specs and build the executable.
+
+To run: `./bin/docker <command>`
+
+This runtime will load files from the local directory that the command is run from.
+
 ## Roadmap
 
 _(In no particular order)_
 
-- [ ] Config linting
-- [ ] Variable interpolation in the config
+- [x] Config linting
+- [x] Variable interpolation in the config
 - [ ] Parallel fanout of API requests
 - [ ] Self updating binary
 - [ ] Extract Kong library into separate shard
