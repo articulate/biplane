@@ -8,6 +8,9 @@ setup:
 build:
 	crystal build src/cli.cr -o biplane
 
+build-container:
+	docker build -t articulate/biplane:local .
+
 build-release:
 	crystal build --release src/cli.cr -o biplane
 
