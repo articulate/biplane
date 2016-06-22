@@ -125,6 +125,8 @@ To run: `./bin/docker <command>`
 
 This runtime will load files from the local directory that the command is run from.
 
+You can also simply use the command in the `bin/docker` file to run the built image anywhere you want on your filesystem.
+
 ## Roadmap
 
 _(In no particular order)_
