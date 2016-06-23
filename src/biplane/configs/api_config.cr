@@ -36,7 +36,7 @@ module Biplane
         "request_path":       request_path,
         "strip_request_path": strip_request_path,
         "upstream_url":       upstream_url,
-        "created_at":         "now",
+        "created_at":         Time.now.epoch.to_s,
       }
     end
 
