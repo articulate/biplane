@@ -12,8 +12,8 @@ RUN make setup
 RUN make test
 RUN make build
 
-RUN mkdir /biplane
-WORKDIR /biplane
-VOLUME /biplane
+RUN mkdir /kong
+WORKDIR /kong
+VOLUME /kong
 
 ENTRYPOINT ["/opt/biplane/biplane"]
