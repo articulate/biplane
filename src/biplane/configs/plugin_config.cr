@@ -18,7 +18,10 @@ module Biplane
     end
 
     def as_params
-      normalize(attributes, {name: name})
+      normalize(attributes, {
+        name:       name,
+        created_at: "'#{Time.now.epoch}'",
+      })
     end
 
     def serialize
