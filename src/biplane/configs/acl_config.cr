@@ -2,6 +2,7 @@ module Biplane
   class AclConfig
     include Config(self)
     include Mixins::Nested
+    include Mixins::NormalizeAttributes
 
     child_key group
 
@@ -10,7 +11,9 @@ module Biplane
     })
 
     def as_params
-      serialize
+      normalize(serialize, {
+        created_at: Time.now.epoch,
+      })
     end
 
     def serialize

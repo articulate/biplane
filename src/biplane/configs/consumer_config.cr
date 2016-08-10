@@ -14,7 +14,10 @@ module Biplane
     })
 
     def as_params
-      {"username": username}
+      {
+        "username":   username,
+        "created_at": Time.now.epoch,
+      }
     end
 
     def acls

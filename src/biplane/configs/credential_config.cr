@@ -2,6 +2,7 @@ module Biplane
   class CredentialConfig
     include Config(self)
     include Mixins::Nested
+    include Mixins::NormalizeAttributes
 
     child_key name
     property! plugin
@@ -17,7 +18,9 @@ module Biplane
     end
 
     def as_params
-      attributes
+      normalize(attributes, {
+        created_at: Time.now.epoch,
+      })
     end
 
     def serialize
