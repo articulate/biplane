@@ -18,6 +18,10 @@ You will likely also need to install libevent, libyaml and [bdw-gc](http://braum
 
 We also provide a [Docker image](https://hub.docker.com/r/articulate/biplane): `docker pull articulate/biplane`. Images are tagged to match versions as they are released.
 
+- `latest` = last tagged version
+- `master` = current code available on GitHub `master` branch.
+- `X.Y.Z` = matches release from the GitHub [releases](https://github.com/articulate/biplane/releases) page.
+
 ## Usage
 
 ### The `--help`
