@@ -14,6 +14,10 @@ You will likely also need to install libevent, libyaml and [bdw-gc](http://braum
 
 `brew install libevent libyaml bdw-gc`
 
+### Docker
+
+We also provide a [Docker image](https://hub.docker.com/r/articulate/biplane): `docker pull articulate/biplane`. Images are tagged to match versions as they are released.
+
 ## Usage
 
 ### The `--help`
