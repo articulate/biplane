@@ -3,6 +3,7 @@ module Biplane
     include Config(self)
     include Mixins::Serialize
     include Mixins::Nested
+    include Mixins::Timestamps
 
     child_key username
     as_nested acls, credentials
@@ -16,7 +17,7 @@ module Biplane
     def as_params
       {
         "username":   username,
-        "created_at": Time.now.epoch,
+        "created_at": pg_now,
       }
     end
 

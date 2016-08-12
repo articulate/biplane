@@ -4,6 +4,7 @@ module Biplane
     include Mixins::Serialize
     include Mixins::YamlToHash
     include Mixins::Nested
+    include Mixins::Timestamps
 
     child_key name
     as_nested plugins
@@ -36,7 +37,7 @@ module Biplane
         "request_path":       request_path,
         "strip_request_path": strip_request_path,
         "upstream_url":       upstream_url,
-        "created_at":         Time.now.epoch,
+        "created_at":         pg_now,
       }
     end
 

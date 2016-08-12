@@ -4,6 +4,7 @@ module Biplane
     include Mixins::YamlToHash
     include Mixins::Nested
     include Mixins::NormalizeAttributes
+    include Mixins::Timestamps
 
     child_key name
     getter! parsed_attrs
@@ -20,7 +21,7 @@ module Biplane
     def as_params
       normalize(attributes, {
         name:       name,
-        created_at: Time.now.epoch,
+        created_at: pg_now,
       })
     end
 

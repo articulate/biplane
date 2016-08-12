@@ -3,6 +3,7 @@ module Biplane
     include Config(self)
     include Mixins::Nested
     include Mixins::NormalizeAttributes
+    include Mixins::Timestamps
 
     child_key group
 
@@ -12,7 +13,7 @@ module Biplane
 
     def as_params
       normalize(serialize, {
-        created_at: Time.now.epoch,
+        created_at: pg_now,
       })
     end
 
