@@ -28,7 +28,7 @@ module Biplane
         "config": {
           "whitelist": ["docs-auth", "google-auth"],
         },
-        "created_at": Time.now.epoch,
+        "created_at": "now",
       })
     end
 
@@ -45,7 +45,7 @@ module Biplane
         "config": {
           "whitelist": ["name", "only"],
         },
-        "created_at": Time.now.epoch,
+        "created_at": "now",
       })
     end
   end

@@ -9,7 +9,7 @@ module Biplane
       credential.as_params.should eq({
         "key":        "xxx",
         "secret":     "yyy",
-        "created_at": Time.now.epoch,
+        "created_at": "now",
       })
     end
 
