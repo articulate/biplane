@@ -11,6 +11,11 @@ build:
 build-container:
 	docker build -t articulate/biplane:local .
 
+build-for-prod:
+	docker build --no-cache -t articulate/biplane:prod .
+	docker tag articulate/biplane:prod articulate/biplane:prod
+	docker push articulate/biplane:prod
+
 build-release:
 	crystal build --release src/cli.cr -o biplane
 
