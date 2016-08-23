@@ -86,7 +86,7 @@ module Biplane
         when 200
           build({{kind}}, JSON.parse(response.body).as_h)
         else
-          raise APIError.new("Invalid API response (status code #{response.status_code})")
+          raise APIError.new("Invalid API response for #{name} (status code #{response.status_code})")
         end
       ensure
         @client.close
@@ -101,7 +101,8 @@ module Biplane
       headers = HTTP::Headers.new
       headers.add("Content-Type", "application/json")
 
-      response = @client.post(config.collection_route.to_s, headers, config.as_params.to_json) as HTTP::Client::Response
+      params = config.as_params
+      response = @client.post(config.collection_route.to_s, headers, params.to_json) as HTTP::Client::Response
       @client.close # close immediately since we might make nested requests
 
       case response.status_code
@@ -109,7 +110,7 @@ module Biplane
         puts paint("Created #{config.member_key.to_s} '#{config.lookup_key}'!", :green)
         config.nested.each { |c| create(c) } if config.nested.any?
       else
-        raise APIError.new("Invalid API response (status code #{response.status_code}): #{response.body}")
+        raise APIError.new("Invalid API response for #{config.class.name} create (status code #{response.status_code}): #{response.body}\n#{params}")
       end
     end
 
@@ -124,7 +125,7 @@ module Biplane
       when 204
         puts paint("#{object.member_key.to_s.capitalize} '#{object.lookup_key}' destroyed!", :red)
       else
-        raise APIError.new("Invalid API response (status code #{response.status_code}): #{response.body}")
+        raise APIError.new("Invalid API response for #{model.class.name} destroy (status code #{response.status_code}): #{response.body}")
       end
     ensure
       @client.close
@@ -146,7 +147,7 @@ module Biplane
         puts paint("Updated #{config.member_key.to_s} '#{config.lookup_key}'!", :yellow)
         Diff.new(config, object).print
       else
-        raise APIError.new("Invalid API response (status code #{response.status_code}): #{response.body}")
+        raise APIError.new("Invalid API response for #{config.class.name} update (status code #{response.status_code}): #{response.body}\n#{params}")
       end
     ensure
       @client.close
