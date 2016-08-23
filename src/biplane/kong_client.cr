@@ -86,7 +86,7 @@ module Biplane
         when 200
           build({{kind}}, JSON.parse(response.body).as_h)
         else
-          raise APIError.new("Invalid API response for #{name} (status code #{response.status_code})")
+          raise APIError.new("Invalid API response for {{name}} (status code #{response.status_code})")
         end
       ensure
         @client.close
