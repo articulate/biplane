@@ -1,7 +1,7 @@
 module Biplane::Mixins
   module Timestamps
     def pg_now
-      "now"
+      "'#{Time.now.epoch}'"
     end
   end
 end
