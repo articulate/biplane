@@ -37,7 +37,7 @@ module Biplane
         "request_path":       request_path,
         "strip_request_path": strip_request_path,
         "upstream_url":       upstream_url,
-        "created_at":         pg_now,
+        "created_at":         epoch_int,
       }
     end
 
