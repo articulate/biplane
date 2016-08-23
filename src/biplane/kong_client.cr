@@ -125,7 +125,7 @@ module Biplane
       when 204
         puts paint("#{object.member_key.to_s.capitalize} '#{object.lookup_key}' destroyed!", :red)
       else
-        raise APIError.new("Invalid API response for #{model.class.name} destroy (status code #{response.status_code}): #{response.body}")
+        raise APIError.new("Invalid API response for #{object.class.name} destroy (status code #{response.status_code}): #{response.body}")
       end
     ensure
       @client.close
