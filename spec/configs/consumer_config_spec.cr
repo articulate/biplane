@@ -20,5 +20,19 @@ module Biplane
       items.should be_a(Array(AclConfig | CredentialConfig))
       items.size.should eq 2
     end
+
+    it "outputs attrs for create" do
+      consumer.for_create.should eq({
+        "username":   consumer.username,
+        "created_at": "now",
+      })
+    end
+
+    it "uses epoch time for update" do
+      consumer.for_update.should eq({
+        "username":   consumer.username,
+        "created_at": Time.now.epoch,
+      })
+    end
   end
 end

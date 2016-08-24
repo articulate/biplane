@@ -6,10 +6,18 @@ module Biplane
     credential.parent = parent = yaml_fixture(ConsumerConfig)
 
     it "can flatten for params" do
-      credential.as_params.should eq({
+      credential.for_create.should eq({
         "key":        "xxx",
         "secret":     "yyy",
         "created_at": "now",
+      })
+    end
+
+    it "outputs epoch time for update" do
+      credential.for_update.should eq({
+        "key":        "xxx",
+        "secret":     "yyy",
+        "created_at": Time.now.epoch,
       })
     end
 

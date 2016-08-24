@@ -20,5 +20,25 @@ module Biplane
       plugins.should be_a(Array(PluginConfig))
       plugins.map { |p| p.name }.should eq ["acl", "jwt"]
     end
+
+    it "outputs attrs for create" do
+      api.for_create.should eq({
+        "name":               api.name,
+        "request_path":       api.request_path,
+        "strip_request_path": api.strip_request_path,
+        "upstream_url":       api.upstream_url,
+        "created_at":         "now",
+      })
+    end
+
+    it "uses epoch time for update" do
+      api.for_update.should eq({
+        "name":               api.name,
+        "request_path":       api.request_path,
+        "strip_request_path": api.strip_request_path,
+        "upstream_url":       api.upstream_url,
+        "created_at":         Time.now.epoch,
+      })
+    end
   end
 end

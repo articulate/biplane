@@ -15,5 +15,19 @@ module Biplane
       acl.member_route.should be_a(Route)
       acl.member_route.to_s.should eq "/consumers/#{parent.lookup_key}/acls/:id"
     end
+
+    it "outputs attrs for create" do
+      acl.for_create.should eq({
+        "group":      acl.group,
+        "created_at": "now",
+      })
+    end
+
+    it "uses epoch time for update" do
+      acl.for_update.should eq({
+        "group":      acl.group,
+        "created_at": Time.now.epoch,
+      })
+    end
   end
 end
