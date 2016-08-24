@@ -14,11 +14,15 @@ module Biplane
       credentials: {type: Array(CredentialConfig), default: Array(CredentialConfig).new},
     })
 
-    def as_params
+    def for_create
       {
         "username":   username,
         "created_at": pg_now,
       }
+    end
+
+    def for_update
+      for_create.merge({"created_at": epoch_int})
     end
 
     def acls

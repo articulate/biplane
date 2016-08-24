@@ -31,7 +31,7 @@ module Biplane
       ChildCollection.new(@plugins, self)
     end
 
-    def as_params
+    def for_create
       {
         "name":               name,
         "request_path":       request_path,
@@ -39,6 +39,10 @@ module Biplane
         "upstream_url":       upstream_url,
         "created_at":         pg_now,
       }
+    end
+
+    def for_update
+      for_create.merge({"created_at": epoch_int})
     end
 
     def serialize

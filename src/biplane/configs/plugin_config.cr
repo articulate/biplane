@@ -18,11 +18,15 @@ module Biplane
       @parsed_attrs ||= @attributes.nil? ? Hash(String, Type).new : normalize(to_hash(@attributes) as Hash)
     end
 
-    def as_params
+    def for_create
       normalize(attributes, {
         name:       name,
         created_at: pg_now,
       })
+    end
+
+    def for_update
+      normalize(for_create, {created_at: epoch_int})
     end
 
     def serialize

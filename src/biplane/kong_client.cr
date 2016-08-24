@@ -101,7 +101,7 @@ module Biplane
       headers = HTTP::Headers.new
       headers.add("Content-Type", "application/json")
 
-      params = config.as_params
+      params = config.for_create
       response = @client.post(config.collection_route.to_s, headers, params.to_json) as HTTP::Client::Response
       @client.close # close immediately since we might make nested requests
 
@@ -139,7 +139,7 @@ module Biplane
       headers = HTTP::Headers.new
       headers.add("Content-Type", "application/json")
 
-      params = normalize(config.as_params, {"id": object.id})
+      params = normalize(config.for_update, {"id": object.id})
       response = @client.put(config.collection_route.to_s, headers, params.to_json) as HTTP::Client::Response
 
       case response.status_code

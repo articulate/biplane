@@ -23,7 +23,7 @@ module Biplane
     end
 
     it "can present config as params" do
-      plugin.as_params.should eq({
+      plugin.for_create.should eq({
         "name":   "acl",
         "config": {
           "whitelist": ["docs-auth", "google-auth"],
@@ -40,12 +40,22 @@ module Biplane
         },
       }))
 
-      odd.as_params.should eq({
+      odd.for_create.should eq({
         "name":   "what",
         "config": {
           "whitelist": ["name", "only"],
         },
         "created_at": "now",
+      })
+    end
+
+    it "outputs epoch time for update" do
+      plugin.for_update.should eq({
+        "name":   "acl",
+        "config": {
+          "whitelist": ["docs-auth", "google-auth"],
+        },
+        "created_at": Time.now.epoch,
       })
     end
   end
