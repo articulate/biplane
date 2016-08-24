@@ -18,10 +18,12 @@ module Biplane
       route(collection_key, {name: name})
     end
 
-    def as_params
-      normalize(attributes, {
-        created_at: pg_now,
-      })
+    def for_create
+      normalize(attributes, {created_at: pg_now})
+    end
+
+    def for_update
+      normalize(for_create, {created_at: epoch_int})
     end
 
     def serialize
