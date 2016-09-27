@@ -1,8 +1,8 @@
 module Biplane
   class AclConfig
     include Config(self)
-    include Mixins::Nested
     include Mixins::NormalizeAttributes
+    include Mixins::Nested
     include Mixins::Timestamps
 
     child_key group

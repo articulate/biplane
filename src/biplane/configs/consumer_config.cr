@@ -1,8 +1,8 @@
 module Biplane
   class ConsumerConfig
-    include Config(self)
     include Mixins::Serialize
     include Mixins::Nested
+    include Config(self)
     include Mixins::Timestamps
 
     child_key username
