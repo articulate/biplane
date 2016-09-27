@@ -22,6 +22,32 @@ module Biplane
       plugin.member_route.to_s.should eq "/apis/#{parent.name}/plugins/:id"
     end
 
+    it "passes thru empty values" do
+      yaml = <<-YAML
+        name: 'datadog'
+        attributes:
+          config:
+            host: datadog
+            timeout: 10000
+            metrics:
+              - request_count
+              - latency
+              - request_size
+              - status_count
+              - response_size
+              - unique_users
+              - request_per_user
+            tags: {}
+            port: 8125
+      YAML
+
+      empty_plugin = PluginConfig.from_yaml(yaml)
+      config = empty_plugin.attributes["config"] as Hash
+
+      config.keys.should contain("tags")
+      config["tags"].should eq Hash(String, PluginConfig::Type).new
+    end
+
     it "can present config as params" do
       plugin.for_create.should eq({
         "name":   "acl",
