@@ -1,8 +1,8 @@
 module Biplane
   class CredentialConfig
-    include Config(self)
     include Mixins::Nested
     include Mixins::NormalizeAttributes
+    include Config(self)
     include Mixins::Timestamps
 
     child_key name

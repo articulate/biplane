@@ -35,5 +35,9 @@ module Biplane
     def inspect(io : IO)
       io << serialize.to_s
     end
+
+    private def valid_value?(value)
+      !value.is_a?(Nil)
+    end
   end
 end

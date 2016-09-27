@@ -1,9 +1,9 @@
 module Biplane
   class PluginConfig
-    include Config(self)
     include Mixins::YamlToHash
     include Mixins::Nested
     include Mixins::NormalizeAttributes
+    include Config(self)
     include Mixins::Timestamps
 
     child_key name

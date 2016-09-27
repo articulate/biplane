@@ -1,8 +1,8 @@
 module Biplane
   class ApiConfig
-    include Config(self)
     include Mixins::Serialize
     include Mixins::YamlToHash
+    include Config(self)
     include Mixins::Nested
     include Mixins::Timestamps
 
