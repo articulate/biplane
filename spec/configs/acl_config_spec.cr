@@ -18,8 +18,7 @@ module Biplane
 
     it "outputs attrs for create" do
       acl.for_create.should eq({
-        "group":      acl.group,
-        "created_at": "now",
+        "group": acl.group,
       })
     end
 

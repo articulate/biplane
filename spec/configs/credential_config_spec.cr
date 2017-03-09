@@ -7,9 +7,8 @@ module Biplane
 
     it "can flatten for params" do
       credential.for_create.should eq({
-        "key":        "xxx",
-        "secret":     "yyy",
-        "created_at": "now",
+        "key":    "xxx",
+        "secret": "yyy",
       })
     end
 

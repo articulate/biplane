@@ -27,7 +27,6 @@ module Biplane
         "uris":         api.uris,
         "strip_uri":    api.strip_uri,
         "upstream_url": api.upstream_url,
-        "created_at":   "now",
       })
     end
 

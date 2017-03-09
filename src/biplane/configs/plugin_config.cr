@@ -19,10 +19,7 @@ module Biplane
     end
 
     def for_create
-      normalize(attributes, {
-        name:       name,
-        created_at: pg_now,
-      })
+      normalize(attributes, {name: name})
     end
 
     def for_update

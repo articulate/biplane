@@ -37,7 +37,6 @@ module Biplane
         "uris":         uris,
         "strip_uri":    strip_uri,
         "upstream_url": upstream_url,
-        "created_at":   pg_now,
       }
     end
 
