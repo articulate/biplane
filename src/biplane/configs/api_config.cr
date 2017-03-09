@@ -15,12 +15,12 @@ module Biplane
       plugins:    {type: Array(PluginConfig), default: Array(PluginConfig).new},
     })
 
-    def request_path
-      drop_trailing_slash attributes["request_path"].to_s
+    def uris
+      format_uris attributes["uris"]
     end
 
-    def strip_request_path
-      attributes["strip_request_path"] == "true"
+    def strip_uri
+      attributes["strip_uri"] == "true"
     end
 
     def upstream_url
@@ -33,11 +33,10 @@ module Biplane
 
     def for_create
       {
-        "name":               name,
-        "request_path":       request_path,
-        "strip_request_path": strip_request_path,
-        "upstream_url":       upstream_url,
-        "created_at":         pg_now,
+        "name":         name,
+        "uris":         uris,
+        "strip_uri":    strip_uri,
+        "upstream_url": upstream_url,
       }
     end
 
@@ -51,6 +50,26 @@ module Biplane
         "attributes": to_hash(attributes),
         "plugins":    expand(plugins),
       }
+    end
+
+    private def format_uris(uris : YAML::Any)
+      format_uris uris.raw
+    end
+
+    private def format_uris(uris : String)
+      format_uris uris.split(",")
+    end
+
+    private def format_uris(uris : Array(YAML::Type))
+      uris.map { |uri| drop_trailing_slash uri.to_s }
+    end
+
+    private def format_uris(uris : Nil)
+      nil
+    end
+
+    private def format_uris(uris : Hash)
+      format_uris uris.values
     end
 
     private def drop_trailing_slash(string : String)

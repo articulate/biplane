@@ -12,7 +12,7 @@ module Biplane
     })
 
     def for_create
-      normalize(serialize, {created_at: pg_now})
+      normalize(serialize)
     end
 
     def for_update

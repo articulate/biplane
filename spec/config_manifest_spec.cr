@@ -27,9 +27,9 @@ module Biplane
           {
             "name":       "products_admin_api",
             "attributes": {
-              "request_path":       "/admin/products",
-              "strip_request_path": true,
-              "upstream_url":       "http://www.example.com/admin/products",
+              "uris":         "/admin/products",
+              "strip_uri":    true,
+              "upstream_url": "http://www.example.com/admin/products",
             },
             "plugins": [
               {

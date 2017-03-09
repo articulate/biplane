@@ -23,8 +23,7 @@ module Biplane
 
     it "outputs attrs for create" do
       consumer.for_create.should eq({
-        "username":   consumer.username,
-        "created_at": "now",
+        "username": consumer.username,
       })
     end
 

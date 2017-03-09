@@ -15,10 +15,7 @@ module Biplane
     })
 
     def for_create
-      {
-        "username":   username,
-        "created_at": pg_now,
-      }
+      {"username": username}
     end
 
     def for_update

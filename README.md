@@ -61,8 +61,8 @@ A dumped file might look like the following:
 apis:
   - name: products_admin_api
     attributes:
-      request_path: /admin/products
-      strip_request_path: true
+      uris: /admin/products
+      strip_uri: true
       upstream_url: http://www.example.com/admin/products
     plugins:
       - name: acl

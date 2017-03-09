@@ -21,23 +21,36 @@ module Biplane
       plugins.map { |p| p.name }.should eq ["acl", "jwt"]
     end
 
+    it "maintains single uri" do
+      api.uris.should eq ["/content-library"]
+    end
+
+    it "accepts comma-separated uris" do
+      api = ApiConfig.from_yaml File.read("./spec/fixtures/comma-api.yaml")
+      api.uris.should eq ["get.com", "gone.com"]
+    end
+
+    it "accepts array of uris" do
+      api = ApiConfig.from_yaml File.read("./spec/fixtures/array-api.yaml")
+      api.uris.should eq ["get.com", "gone.com"]
+    end
+
     it "outputs attrs for create" do
       api.for_create.should eq({
-        "name":               api.name,
-        "request_path":       api.request_path,
-        "strip_request_path": api.strip_request_path,
-        "upstream_url":       api.upstream_url,
-        "created_at":         "now",
+        "name":         api.name,
+        "uris":         api.uris,
+        "strip_uri":    api.strip_uri,
+        "upstream_url": api.upstream_url,
       })
     end
 
     it "uses epoch time for update" do
       api.for_update.should eq({
-        "name":               api.name,
-        "request_path":       api.request_path,
-        "strip_request_path": api.strip_request_path,
-        "upstream_url":       api.upstream_url,
-        "created_at":         Time.now.epoch,
+        "name":         api.name,
+        "uris":         api.uris,
+        "strip_uri":    api.strip_uri,
+        "upstream_url": api.upstream_url,
+        "created_at":   Time.now.epoch,
       })
     end
   end
