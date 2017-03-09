@@ -50,14 +50,14 @@ module Biplane
     end
 
     describe "when different" do
-      api.strip_request_path = false
+      api.strip_uri = false
 
       it "is not equal" do
         api.should_not eq(cfg)
       end
 
       it "can return a diff" do
-        api.diff(cfg).should eq({"strip_request_path" => Diff.new(true, false)})
+        api.diff(cfg).should eq({"strip_uri" => Diff.new(true, false)})
       end
     end
 
@@ -74,7 +74,7 @@ module Biplane
         # modifed an existing
         #
         api = json_fixture(Api)
-        api.strip_request_path = false
+        api.strip_uri = false
 
         diff_fixture = {
           "data": [
@@ -105,8 +105,8 @@ module Biplane
         api.client = KongClient.new(fake_client)
 
         api.diff(cfg).should eq({
-          "strip_request_path": Diff.new(true, false),
-          "plugins":            {
+          "strip_uri": Diff.new(true, false),
+          "plugins":   {
             # modified config
             "acl": {"attributes": {
               "config": Diff.new({"whitelist": "google-auth"}, {} of String => String),

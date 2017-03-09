@@ -1,6 +1,6 @@
 attributes:
-  request_path: /content-library
-  strip_request_path: true
+  uris: /content-library
+  strip_uri: true
   upstream_url: http://www.example.com/public_queries
 name: library_public_api
 plugins:

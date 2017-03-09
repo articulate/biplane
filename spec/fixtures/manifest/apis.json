@@ -4,8 +4,8 @@
       "created_at": 1456414789000,
       "id": "68a97e2c-fc9d-4063-93a7-59f6489bb823",
       "name": "library_public_api",
-      "request_path": "/content-library",
-      "strip_request_path": true,
+      "uris": "/content-library",
+      "strip_uri": true,
       "upstream_url": "http://example.com/public_queries"
     }
   ],

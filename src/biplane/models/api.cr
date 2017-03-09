@@ -5,16 +5,16 @@ module Biplane
     include Mixins::Nestable
     include Mixins::Nested
 
-    diff_attrs name, request_path, strip_request_path, upstream_url, plugins
+    diff_attrs name, uris, strip_uri, upstream_url, plugins
     child_collection(plugins)
     child_key name
 
     JSON.mapping({
-      id:                 String,
-      name:               String,
-      request_path:       String,
-      strip_request_path: Bool,
-      upstream_url:       String,
+      id:           String,
+      name:         String,
+      uris:         String,
+      strip_uri:    Bool,
+      upstream_url: String,
     })
 
     def serialize
@@ -23,9 +23,9 @@ module Biplane
       {
         "name":       name,
         "attributes": {
-          "request_path":       request_path,
-          "strip_request_path": strip_request_path,
-          "upstream_url":       upstream_url,
+          "uris":         uris,
+          "strip_uri":    strip_uri,
+          "upstream_url": upstream_url,
         },
         "plugins": plugins.serialize,
       }

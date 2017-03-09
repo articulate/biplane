@@ -15,12 +15,12 @@ module Biplane
       plugins:    {type: Array(PluginConfig), default: Array(PluginConfig).new},
     })
 
-    def request_path
-      drop_trailing_slash attributes["request_path"].to_s
+    def uris
+      drop_trailing_slash attributes["uris"].to_s
     end
 
-    def strip_request_path
-      attributes["strip_request_path"] == "true"
+    def strip_uri
+      attributes["strip_uri"] == "true"
     end
 
     def upstream_url
@@ -33,11 +33,11 @@ module Biplane
 
     def for_create
       {
-        "name":               name,
-        "request_path":       request_path,
-        "strip_request_path": strip_request_path,
-        "upstream_url":       upstream_url,
-        "created_at":         pg_now,
+        "name":         name,
+        "uris":         uris,
+        "strip_uri":    strip_uri,
+        "upstream_url": upstream_url,
+        "created_at":   pg_now,
       }
     end
 

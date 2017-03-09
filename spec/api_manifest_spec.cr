@@ -26,9 +26,9 @@ module Biplane
           {
             "name"       => "library_public_api",
             "attributes" => {
-              "request_path"       => "/content-library",
-              "strip_request_path" => true,
-              "upstream_url"       => "http://example.com/public_queries",
+              "uris"         => "/content-library",
+              "strip_uri"    => true,
+              "upstream_url" => "http://example.com/public_queries",
             },
             "plugins" => [
               {
