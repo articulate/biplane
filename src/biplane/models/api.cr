@@ -12,7 +12,7 @@ module Biplane
     JSON.mapping({
       id:           String,
       name:         String,
-      uris:         String,
+      uris:         Array(String),
       strip_uri:    Bool,
       upstream_url: String,
     })
@@ -23,7 +23,7 @@ module Biplane
       {
         "name":       name,
         "attributes": {
-          "uris":         uris,
+          "uris":         uris.join(","),
           "strip_uri":    strip_uri,
           "upstream_url": upstream_url,
         },

@@ -2,7 +2,7 @@
   "created_at": 1456414792000,
   "id": "bbac548e-240c-4f61-b59f-92f283dfb0fd",
   "name": "library_public_api",
-  "uris": "/content-library",
+  "uris": ["/content-library"],
   "strip_uri": true,
   "upstream_url": "http://www.example.com/public_queries"
 }

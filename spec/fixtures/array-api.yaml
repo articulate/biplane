@@ -1,0 +1,5 @@
+name: array-api
+attributes:
+  uris: get.com,gone.com
+  strip_uri: true
+  upstream_url: http://www.example.com/public_queries

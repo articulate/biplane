@@ -21,6 +21,20 @@ module Biplane
       plugins.map { |p| p.name }.should eq ["acl", "jwt"]
     end
 
+    it "maintains single uri" do
+      api.uris.should eq ["/content-library"]
+    end
+
+    it "accepts comma-separated uris" do
+      api = ApiConfig.from_yaml File.read("./spec/fixtures/comma-api.yaml")
+      api.uris.should eq ["get.com", "gone.com"]
+    end
+
+    it "accepts array of uris" do
+      api = ApiConfig.from_yaml File.read("./spec/fixtures/array-api.yaml")
+      api.uris.should eq ["get.com", "gone.com"]
+    end
+
     it "outputs attrs for create" do
       api.for_create.should eq({
         "name":         api.name,
