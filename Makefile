@@ -22,6 +22,6 @@ test:
 	crystal spec
 
 release:
-	git push origin master
+	git push
 	git tag $(VERSION)
 	git push origin tag $(VERSION)
