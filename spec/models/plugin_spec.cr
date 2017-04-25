@@ -94,6 +94,13 @@ module Biplane
 
         plugin.diff(new_cfg).should eq({"attributes": {"config": Diff.new(nil, plugin.attributes["config"])}})
       end
+
+      it "will ignore nested empties" do
+        plugin = build_json_fixture(Plugin, "datadog")
+        cfg = build_yaml_fixture(PluginConfig, "datadog")
+
+        plugin.should eq(cfg)
+      end
     end
   end
 end

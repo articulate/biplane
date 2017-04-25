@@ -8,7 +8,7 @@ module Biplane
     delegate empty?, last, @collection
 
     def initialize(@collection : Array(T), @parent = nil)
-      @collection.map! {|item| item.parent = @parent; item } unless @parent.nil?
+      @collection.map! { |item| item.parent = @parent; item } unless @parent.nil?
     end
 
     def id_key
@@ -16,7 +16,7 @@ module Biplane
     end
 
     def each
-      @collection.each {|item| yield item }
+      @collection.each { |item| yield item }
     end
 
     def lookup(id)
@@ -42,19 +42,21 @@ module Biplane
     end
 
     def diff(other : ChildCollection)
+      # if union of keys is empty, we have no comparable items
       all_keys = keys | other.keys
       return if all_keys.empty?
 
+      # compare on a key-by-key basis
       diffs = all_keys.map do |k|
         this_inst = lookup(k)
         other_inst = other.lookup(k)
 
         result = compare(this_inst, other_inst)
 
-        { k => result } if result && !result.empty?
+        {k => result} if result && !result.empty?
       end.compact
 
-      diffs.empty? ? nil : diffs.reduce {|memo, item| memo.merge(item) }
+      diffs.empty? ? nil : diffs.reduce { |memo, item| memo.merge(item) }
     end
 
     # Removal

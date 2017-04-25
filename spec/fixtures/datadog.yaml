@@ -1,0 +1,14 @@
+name: 'datadog'
+attributes:
+  config:
+    host: datadog
+    timeout: 10000
+    metrics:
+      - request_count
+      - latency
+      - request_size
+      - status_count
+      - response_size
+      - unique_users
+      - request_per_user
+    port: 1234
