@@ -6,6 +6,13 @@ Control your Kong instance through simple configuration.
 
 ![biplane](http://drops.articulate.com/w1ad/NQlLBhGp+)
 
+## Versioning :warning:
+
+- The `1.3.x` branch and release branch is for pre-0.10 Kong, namely the `0.9.x` branch.
+- The `1.4.x` release line (currently master) is for Kong `+0.10.x`.
+
+The `1.4.x` branch is being actively developed to keep up with changes in the latest Kong release cycles. `1.3.x` will be maintained with any backwards compatable changes needed to resolve issues found in future releases that affect Kong `0.9.x`. We will likely not add new features introduced to `1.4.x` to the `1.3.x` branch.
+
 ## Installation
 
 Download a binary from the [releases page](https://github.com/articulate/biplane/releases) and place somewhere in your `PATH`.
