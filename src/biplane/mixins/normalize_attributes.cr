@@ -11,8 +11,6 @@ module Biplane::Mixins
     end
 
     private def normalize(memo, key, value)
-      return memo if value.is_a?(Hash) && value.empty?
-
       stretch_key(memo, key.split('.'), value)
     end
 

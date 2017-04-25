@@ -35,10 +35,5 @@ module Biplane
       result = Dummy.new({"one": {"two": "three"}}).norm({"four": "five"})
       result.should eq({"one": {"two": "three"}, "four": "five"})
     end
-
-    it "ignores empty nests" do
-      result = Dummy.new({"one": {"two": "three"}}).norm({"four": Hash(String, String).new})
-      result.should eq({"one": {"two": "three"}})
-    end
   end
 end

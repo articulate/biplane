@@ -36,6 +36,7 @@ module Biplane
       io << serialize.to_s
     end
 
+    # overrides to allow for empty values
     private def valid_value?(value)
       !value.is_a?(Nil)
     end

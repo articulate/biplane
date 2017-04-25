@@ -3,14 +3,22 @@ require "mock"
 
 require "../src/biplane"
 
+def build_json_fixture(type, name)
+  type.from_json File.read("./spec/fixtures/#{name}.json")
+end
+
+def build_yaml_fixture(type, name)
+  type.from_yaml File.read("./spec/fixtures/#{name}.yaml")
+end
+
 def json_fixture(type)
   base = type.name.split("::").last.downcase
-  type.from_json File.read("./spec/fixtures/#{base}.json")
+  build_json_fixture(type, base)
 end
 
 def yaml_fixture(type)
   base = type.name.split("::").last.gsub("Config", "").downcase
-  type.from_yaml File.read("./spec/fixtures/#{base}.yaml")
+  build_yaml_fixture(type, base)
 end
 
 def build_response(body : Hash | Nil, status = 200)
