@@ -22,7 +22,7 @@ module Biplane
       plugin.member_route.to_s.should eq "/apis/#{parent.name}/plugins/:id"
     end
 
-    it "passes thru empty values" do
+    it "ignores empty values" do
       yaml = <<-YAML
         name: 'datadog'
         attributes:
