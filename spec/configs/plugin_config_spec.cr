@@ -44,8 +44,8 @@ module Biplane
       empty_plugin = PluginConfig.from_yaml(yaml)
       config = empty_plugin.attributes["config"] as Hash
 
-      config.keys.should contain("tags")
-      config["tags"].should eq Hash(String, PluginConfig::Type).new
+      config.keys.should_not contain("tags")
+      # config["tags"].should eq Hash(String, PluginConfig::Type).new
     end
 
     it "can present config as params" do
