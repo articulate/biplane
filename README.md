@@ -53,9 +53,15 @@ Flags:
 
 ### Using Docker
 
-As the Docker image is pointed at the biplane executable simply provide parameters to actually do something. For example:
+As the Docker image is pointed at the biplane executable simply provide parameters to actually do something.
+
+Get the help file.
 
     docker run --rm -it articulate/biplane -h
+
+Dump the current config to STDOUT
+
+    docker run --rm -it articulate/biplane dump --host="my-machine-name" --no-https
 
 ### Config format
 
