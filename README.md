@@ -51,6 +51,18 @@ Flags:
   -h, --help  # Help for this command. default: 'false'.
 ```
 
+### Using Docker
+
+As the Docker image is pointed at the biplane executable simply provide parameters to actually do something.
+
+Get the help file.
+
+    docker run --rm -it articulate/biplane -h
+
+Dump the current config to STDOUT
+
+    docker run --rm -it articulate/biplane dump --host="my-machine-name" --no-https
+
 ### Config format
 
 Biplane follows the same conventions as [Kongfig](https://github.com/mybuilder/kongfig). If you want to start configuration from an existing Kong instance, you can dump the current config and modify as needed.
