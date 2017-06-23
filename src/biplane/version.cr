@@ -1,3 +1,3 @@
 module Biplane
-  VERSION = "1.4.2-dev"
+  VERSION = "1.4.3"
 end
