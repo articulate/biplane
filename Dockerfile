@@ -9,8 +9,7 @@ COPY src/ /opt/biplane/src
 
 WORKDIR /opt/biplane
 RUN make setup
-RUN make build-release
-
+RUN make build
 RUN mkdir /kong
 WORKDIR /kong
 VOLUME /kong
